@@ -5,6 +5,7 @@ import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../hooks/useAuth';
+import { signInWithGoogle, isSupabaseConfigured } from '../../services/supabase';
 
 const loadGoogleScript = () => {
   if (window.google) return Promise.resolve();
@@ -71,8 +72,19 @@ const Login = () => {
   };
 
   const handleGoogleLogin = async () => {
+    if (isSupabaseConfigured()) {
+      try {
+        await signInWithGoogle();
+        toast.success('Redirecting to Google...');
+        return;
+      } catch (err) {
+        toast.error(err.message || 'Supabase Google sign-in failed');
+        return;
+      }
+    }
+
     if (!import.meta.env.VITE_GOOGLE_CLIENT_ID) {
-      toast.error('Google login is not configured');
+      toast.error('Google OAuth credentials not configured in .env');
       return;
     }
 
