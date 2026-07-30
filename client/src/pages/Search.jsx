@@ -63,9 +63,9 @@ const Search = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark-900 pt-24 pb-16">
+    <div className="min-h-screen bg-[#f9f9ff] dark:bg-dark-900 pt-24 pb-16">
       {/* Search Header */}
-      <div className="bg-white dark:bg-dark-800 border-b border-gray-200 dark:border-dark-700 py-6 px-4">
+      <div className="bg-[#131a33] border-b border-[#28313f] py-7 px-4">
         <div className="max-w-7xl mx-auto">
           <SearchBar
             onSearch={handleSearch}
@@ -79,9 +79,9 @@ const Search = () => {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Filters Sidebar */}
           <aside className="lg:w-64 shrink-0">
-            <div className="bg-white dark:bg-dark-800 rounded-2xl border border-gray-100 dark:border-dark-700 p-5 shadow-sm sticky top-28">
+            <div className="premium-card rounded-[20px] border border-gray-200/80 dark:border-dark-700 p-6 shadow-sm sticky top-28">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                <h3 className="font-semibold text-[#131c2a] dark:text-gray-100 flex items-center gap-2">
                   <SlidersHorizontal size={16} />
                   Filters
                 </h3>
@@ -134,7 +134,7 @@ const Search = () => {
           {/* Results Grid */}
           <div className="flex-1">
             <div className="flex items-center justify-between mb-4">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {loading ? 'Searching...' : `${total} businesses found`}
               </p>
             </div>
@@ -162,7 +162,7 @@ const Search = () => {
               <div className="flex justify-center gap-2 mt-8">
                 {[...Array(Math.ceil(total / 9))].map((_, i) => (
                   <button key={i} onClick={() => setPage(i + 1)}
-                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${page === i + 1 ? 'bg-blue-600 text-white' : 'bg-white dark:bg-dark-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-dark-700 hover:bg-gray-50 dark:hover:bg-dark-700'}`}
+                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${page === i + 1 ? 'bg-[#131a33] text-white' : 'bg-white dark:bg-dark-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-dark-700 hover:bg-gray-50 dark:hover:bg-dark-700'}`}
                   >
                     {i + 1}
                   </button>

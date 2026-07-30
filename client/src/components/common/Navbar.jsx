@@ -35,7 +35,8 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Browse Services', path: '/search' },
+    { name: 'Explore', path: '/search' },
+    { name: 'Services', path: '/search' },
   ];
 
   return (
@@ -153,7 +154,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm"
+                  className="px-4 py-2 text-sm font-semibold text-[#131a33] bg-[#e9c178] hover:bg-[#f0cf8a] rounded-lg transition-colors shadow-sm"
                 >
                   Register
                 </Link>

@@ -68,10 +68,10 @@ const Home = () => {
       {/* ─────────────── HERO SECTION ─────────────── */}
       <section className="relative min-h-[790px] pt-28 pb-20 flex flex-col items-center justify-center text-center px-4 overflow-hidden z-0 home-section">
         {/* Gradient background */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_8%,rgba(53,109,243,0.20),transparent_34%),linear-gradient(145deg,#eef4ff_0%,#f8faff_48%,#ffffff_100%)] dark:bg-[radial-gradient(circle_at_50%_8%,rgba(79,70,229,0.3),transparent_38%),linear-gradient(135deg,#0a0f1e_0%,#111b3d_55%,#17113d_100%)] -z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_40%,rgba(0,106,99,0.35),transparent_32%),linear-gradient(135deg,#071426_0%,#101f36_55%,#071426_100%)] -z-10" />
         {/* Decorative blobs */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-3xl -z-10" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-600/15 rounded-full blur-3xl -z-10" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#006a63]/20 rounded-full blur-3xl -z-10" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#e9c178]/10 rounded-full blur-3xl -z-10" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 dark:bg-blue-900/10 rounded-full blur-3xl -z-10" />
 
         <motion.div
@@ -81,7 +81,7 @@ const Home = () => {
         >
           {/* Tag */}
           <motion.div variants={fadeUp} custom={0}>
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold bg-white/80 border border-blue-200 text-blue-600 shadow-lg shadow-blue-500/10 backdrop-blur dark:bg-white/10 dark:border-white/15 dark:text-blue-300">
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold bg-white/10 border border-[#e9c178]/50 text-[#f0cf8a] shadow-lg backdrop-blur">
               <Sparkles size={14} /> Ustad Hub - Book Smart. Live Easy.
             </span>
           </motion.div>
@@ -120,18 +120,18 @@ const Home = () => {
 
           {/* Headline */}
           <motion.h1 variants={fadeUp} custom={1}
-            className="text-5xl md:text-[6.5rem] font-extrabold text-gray-900 dark:text-white font-outfit leading-[0.94] tracking-[-0.06em] drop-shadow-sm"
+            className="text-4xl sm:text-5xl md:text-[5.25rem] font-extrabold text-white font-outfit leading-[0.98] tracking-[-0.055em] drop-shadow-sm"
           >
             Find Trusted<br />
             <span className="bg-gradient-to-r from-blue-600 via-indigo-500 to-violet-600 dark:from-blue-400 dark:via-indigo-400 dark:to-violet-400 bg-clip-text text-transparent">
-              Local Services
+              <span className="text-[#e9c178]">Local Experts</span>
             </span>{' '}
             Near You
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p variants={fadeUp} custom={2}
-            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed"
           >
             Discover skilled professionals, compare trusted businesses, and book the right service for your life — all in one beautiful place.
           </motion.p>

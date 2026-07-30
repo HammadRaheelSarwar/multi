@@ -4,7 +4,7 @@ import { Facebook, Twitter, Instagram, Linkedin, Heart } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-b from-white to-blue-50/60 dark:from-dark-900 dark:to-[#101a35] border-t border-blue-100/70 dark:border-white/10 transition-colors duration-300">
+    <footer className="bg-[#071426] text-white border-t border-[#e9c178]/30 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}

@@ -39,7 +39,7 @@ const SearchBar = ({ onSearch, initialQuery = '', initialCity = '' }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-4xl bg-white dark:bg-dark-800 rounded-2xl shadow-xl border border-gray-100 dark:border-dark-700 p-2 flex flex-col md:flex-row items-center gap-2"
+      className="w-full max-w-4xl bg-white dark:bg-dark-800 rounded-xl shadow-[0_12px_32px_rgba(19,28,42,0.10)] border border-gray-200/80 dark:border-dark-700 p-2 flex flex-col md:flex-row items-center gap-2"
     >
       {/* Search Query */}
       <div className="flex-1 w-full flex items-center gap-2 px-3 border-b md:border-b-0 md:border-r border-gray-100 dark:border-dark-700 pb-2 md:pb-0">
@@ -79,7 +79,7 @@ const SearchBar = ({ onSearch, initialQuery = '', initialCity = '' }) => {
       {/* Submit Button */}
       <button
         type="submit"
-        className="w-full md:w-auto px-8 py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all shadow-md shadow-blue-500/20 cursor-pointer"
+        className="w-full md:w-auto px-8 py-3 text-sm font-semibold text-white bg-[#131a33] hover:bg-[#28313f] rounded-lg transition-all shadow-md cursor-pointer"
       >
         Search
       </button>

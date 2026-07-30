@@ -124,7 +124,7 @@ const BusinessProfile = () => {
   const verificationBadge = { bronze: '🥉', silver: '🥈', gold: '🥇', premium: '💎' };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark-900 pt-20">
+    <div className="min-h-screen bg-[#f9f9ff] dark:bg-dark-900 pt-20">
       {/* Cover Image */}
       <div className="relative h-72 overflow-hidden">
         <img
@@ -132,7 +132,7 @@ const BusinessProfile = () => {
           alt={business.name}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#131a33]/80 via-[#131a33]/10 to-transparent" />
       </div>
 
       <div className="max-w-5xl mx-auto px-4 -mt-16 relative z-10 pb-16">
@@ -140,7 +140,7 @@ const BusinessProfile = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-dark-800 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-dark-700 mb-6"
+          className="premium-card rounded-[20px] p-6 shadow-xl border border-gray-100 dark:border-dark-700 mb-6"
         >
           <div className="flex flex-col sm:flex-row gap-4 items-start">
             {/* Logo */}
@@ -188,7 +188,7 @@ const BusinessProfile = () => {
             <div className="flex flex-col gap-2 shrink-0 w-full sm:w-auto">
               {business.phone && (
                 <a href={`tel:${business.phone}`}
-                  className="flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors shadow-md"
+                  className="flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-[#006a63] hover:bg-[#00504a] rounded-lg transition-colors shadow-md"
                 >
                   <Phone size={16} /> Call Now
                 </a>
@@ -220,10 +220,10 @@ const BusinessProfile = () => {
         </motion.div>
 
         {/* Tabs */}
-        <div className="flex gap-1 bg-white dark:bg-dark-800 rounded-xl p-1 border border-gray-100 dark:border-dark-700 mb-6 overflow-x-auto">
+        <div className="flex gap-1 bg-white dark:bg-dark-800 rounded-xl p-1 border border-gray-200 dark:border-dark-700 mb-6 overflow-x-auto shadow-sm">
           {['about', 'services', 'gallery', 'reviews', 'hours'].map(tab => (
             <button key={tab} onClick={() => setActiveTab(tab)}
-              className={`px-5 py-2 text-sm font-medium rounded-lg capitalize whitespace-nowrap transition-all ${activeTab === tab ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'}`}
+              className={`px-5 py-2 text-sm font-medium rounded-lg capitalize whitespace-nowrap transition-all ${activeTab === tab ? 'bg-[#131a33] text-white shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'}`}
             >
               {tab}
             </button>

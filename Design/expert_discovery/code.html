@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>UstadHub - Service Discovery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary": "#000000",
+                        "secondary-fixed": "#9cf2e8",
+                        "on-surface-variant": "#45464d",
+                        "on-tertiary-fixed": "#271900",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#7b83a0",
+                        "on-secondary-fixed": "#00201d",
+                        "tertiary-fixed": "#ffdea5",
+                        "error-container": "#ffdad6",
+                        "outline": "#76767e",
+                        "surface-variant": "#dae3f6",
+                        "surface-container-high": "#dfe8fc",
+                        "on-primary-fixed-variant": "#3e4660",
+                        "primary-fixed-dim": "#bec5e5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#131c2a",
+                        "outline-variant": "#c6c6ce",
+                        "primary-container": "#131a33",
+                        "secondary": "#006a63",
+                        "on-tertiary-container": "#a07f3c",
+                        "on-primary-fixed": "#131a33",
+                        "surface-tint": "#565d79",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#e9c178",
+                        "on-tertiary-fixed-variant": "#5d4202",
+                        "background": "#f9f9ff",
+                        "on-surface": "#131c2a",
+                        "surface-bright": "#f9f9ff",
+                        "inverse-primary": "#bec5e5",
+                        "inverse-on-surface": "#ebf1ff",
+                        "surface-container-low": "#f0f3ff",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#dae3f6",
+                        "tertiary-container": "#271900",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "inverse-surface": "#28313f",
+                        "on-secondary-container": "#006f67",
+                        "surface": "#f9f9ff",
+                        "secondary-container": "#99efe5",
+                        "secondary-fixed-dim": "#80d5cb",
+                        "surface-container": "#e7eeff",
+                        "primary": "#000000",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-dim": "#d1daee",
+                        "on-secondary": "#ffffff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "base": "8px",
+                        "gutter": "24px",
+                        "margin-desktop": "48px",
+                        "container-max": "1280px",
+                        "stack-sm": "12px",
+                        "stack-md": "24px",
+                        "margin-mobile": "16px",
+                        "stack-lg": "48px"
+                    },
+                    fontFamily: {
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Inter"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "label-sm": ["12px", { lineHeight: "1.2", letterSpacing: "0.05em", fontWeight: "600" }],
+                        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+                        "label-md": ["14px", { lineHeight: "1.4", letterSpacing: "0.01em", fontWeight: "500" }],
+                        "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "headline-lg": ["32px", { lineHeight: "1.2", fontWeight: "600" }],
+                        "body-md": ["16px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "headline-lg-mobile": ["28px", { lineHeight: "1.2", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #F8F6F1; } /* Warm Ivory Override */
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .premium-border:hover { border-color: #D4AF37; } /* Champagne Gold */
+        .accent-deep-emerald { color: #006a63; }
+        .bg-deep-emerald { background-color: #006a63; }
+        .border-champagne { border-color: #D4AF37; }
+    </style>
+</head>
+<body class="text-on-surface font-body-md antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="sticky top-0 w-full z-50 bg-white/70 dark:bg-tertiary/70 backdrop-blur-md shadow-sm">
+<div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="flex items-center gap-stack-md">
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-white">UstadHub</span>
+<!-- Search Bar Left -->
+<div class="hidden md:flex relative ml-stack-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 bg-[#F8F6F1] border border-outline-variant/20 rounded-full focus:outline-none focus:border-secondary transition-colors text-label-md font-label-md w-64" placeholder="Search services..." type="text"/>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-stack-md">
+<a class="text-primary dark:text-white border-b-2 border-tertiary-fixed-dim pb-1 text-label-md font-label-md" href="#">Browse</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-white transition-colors hover:border-b-2 hover:border-tertiary-fixed-dim duration-300 pb-1 text-label-md font-label-md" href="#">Experts</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-white transition-colors hover:border-b-2 hover:border-tertiary-fixed-dim duration-300 pb-1 text-label-md font-label-md" href="#">Services</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-white transition-colors hover:border-b-2 hover:border-tertiary-fixed-dim duration-300 pb-1 text-label-md font-label-md" href="#">Memberships</a>
+</nav>
+<div class="flex items-center gap-stack-sm">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors duration-300">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors duration-300">
+<span class="material-symbols-outlined">person</span>
+</button>
+<button class="ml-stack-sm bg-primary text-white px-6 py-2 rounded-full text-label-md font-label-md hover:opacity-90 transition-opacity">Get Started</button>
+</div>
+</div>
+</header>
+<main class="flex-grow max-w-container-max mx-auto w-full px-margin-mobile md:px-margin-desktop py-stack-lg flex flex-col md:flex-row gap-gutter">
+<!-- Refined Filtering Sidebar -->
+<aside class="w-full md:w-64 flex-shrink-0">
+<div class="bg-white rounded-[20px] p-stack-md shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20 sticky top-24">
+<h3 class="text-headline-md font-headline-md mb-stack-md text-primary">Filters</h3>
+<!-- Category -->
+<div class="mb-stack-md">
+<h4 class="text-label-sm font-label-sm text-on-surface-variant mb-stack-sm uppercase tracking-wider">Category</h4>
+<div class="space-y-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="form-checkbox h-5 w-5 text-secondary rounded border-outline-variant focus:ring-secondary focus:ring-offset-0" type="checkbox"/>
+<span class="text-body-md font-body-md text-primary group-hover:text-secondary transition-colors">Legal Consulting</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="form-checkbox h-5 w-5 text-secondary rounded border-outline-variant focus:ring-secondary focus:ring-offset-0" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-surface-variant group-hover:text-secondary transition-colors">Financial Advisory</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="form-checkbox h-5 w-5 text-secondary rounded border-outline-variant focus:ring-secondary focus:ring-offset-0" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-surface-variant group-hover:text-secondary transition-colors">Business Strategy</span>
+</label>
+</div>
+</div>
+<div class="h-px bg-outline-variant/20 w-full mb-stack-md"></div>
+<!-- Price Range -->
+<div class="mb-stack-md">
+<h4 class="text-label-sm font-label-sm text-on-surface-variant mb-stack-sm uppercase tracking-wider">Hourly Rate</h4>
+<input class="w-full h-1 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-secondary" max="500" min="50" type="range" value="250"/>
+<div class="flex justify-between mt-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant">$50</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">$500+</span>
+</div>
+</div>
+<div class="h-px bg-outline-variant/20 w-full mb-stack-md"></div>
+<!-- Attributes -->
+<div>
+<h4 class="text-label-sm font-label-sm text-on-surface-variant mb-stack-sm uppercase tracking-wider">Attributes</h4>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 rounded-full border border-champagne bg-[#D4AF37]/10 text-primary text-label-sm font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">workspace_premium</span> Featured
+                        </button>
+<button class="px-3 py-1.5 rounded-full border border-outline-variant bg-transparent text-on-surface-variant text-label-sm font-label-sm hover:border-secondary hover:text-secondary transition-colors">
+                            Verified
+                        </button>
+<button class="px-3 py-1.5 rounded-full border border-outline-variant bg-transparent text-on-surface-variant text-label-sm font-label-sm hover:border-secondary hover:text-secondary transition-colors">
+                            Top Rated
+                        </button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Grid -->
+<div class="flex-grow">
+<div class="flex justify-between items-end mb-stack-md">
+<div>
+<h1 class="text-display-lg font-display-lg text-primary">Browse Experts</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant mt-2">Discover elite professionals tailored to your needs.</p>
+</div>
+<div class="hidden md:flex gap-2">
+<button class="p-2 rounded-lg bg-white border border-outline-variant/20 text-primary hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined">grid_view</span></button>
+<button class="p-2 rounded-lg bg-transparent text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">view_list</span></button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Premium Card 1 -->
+<div class="bg-white rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20 overflow-hidden group transition-all duration-300 hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] premium-border relative">
+<div class="absolute top-0 left-0 w-full h-1 bg-[#D4AF37]"></div>
+<div class="relative h-48 w-full bg-surface-variant overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A professional headshot of a confident female legal consultant in a modern, well-lit office setting. She is wearing a tailored navy suit. The lighting is soft and natural, creating a sophisticated and trustworthy mood consistent with a high-end SaaS platform aesthetic. Minimalist background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWjR396Ujl-FWOOKlGZvFEdKoH_NVrO0JyNmn17T0mFvcEEqiQl8rK-1LhBwot75MdTQ62_gQUJo6QkFXpRvquiXbAOLcjmiEjo5lDe0szgzvtccdZih31uiWQazq79BHBXnQIrwTM8Znx5v5Kpk7JDBidAJVJGqKFR_f2X9Ovi--8WKrROnLg_4pacPszgGFK4v9_jwmXELB2Ll8sZRtMn_UUv-cOfYc_k2VFl5ZSEBGvcHNukTS-wA"/>
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-label-sm font-label-sm font-bold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[#D4AF37]" style="font-size: 16px; font-variation-settings: 'FILL' 1;">star</span> 4.9
+                        </div>
+</div>
+<div class="p-stack-md">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-headline-md font-headline-md text-[#131a33]">Sarah Jenkins</h3>
+<span class="material-symbols-outlined text-[#006a63]" title="Verified Expert">verified</span>
+</div>
+<p class="text-label-md font-label-md text-secondary mb-3">Corporate Law Specialist</p>
+<p class="text-body-md font-body-md text-on-surface-variant line-clamp-2 mb-4">Expert in mergers, acquisitions, and corporate governance for international firms.</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/20">
+<span class="text-body-lg font-body-lg font-bold text-primary">$350<span class="text-body-md font-body-md text-on-surface-variant font-normal">/hr</span></span>
+<button class="text-label-md font-label-md text-secondary hover:text-primary transition-colors font-semibold">View Profile</button>
+</div>
+</div>
+</div>
+<!-- Premium Card 2 -->
+<div class="bg-white rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20 overflow-hidden group transition-all duration-300 hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:border-secondary relative">
+<div class="relative h-48 w-full bg-surface-variant overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A professional portrait of a male financial advisor sitting at a sleek glass desk with subtle data charts visible on a monitor in the blurred background. He wears a smart casual grey blazer. The lighting is bright and modern, conveying a sense of authority, clarity, and premium service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9emJ7ZmEW70jWdajzcbQpX1NpqTi1QTgd8rrpJLyGzVzBpm9WX7ORakAVg_8QNsLUs9XMCcvDdbQNHt01nIohddhaTndxSDvOIDqkR1KnGzQy2-spsjHJjO0UzYTK7HpE9isItStKF_ZGEko5-OUThAA1efRkvz0NZ4__pZ3vTxGOhSXgdPUOVngg5080HC8jMSKMWIR0dmGRtOTfgf2B1EVA7uTk7ljjfO04OI4YLpdCrmdluyK-Sg"/>
+</div>
+<div class="p-stack-md">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-headline-md font-headline-md text-[#131a33]">David Chen</h3>
+<span class="material-symbols-outlined text-[#006a63]" title="Verified Expert">verified</span>
+</div>
+<p class="text-label-md font-label-md text-secondary mb-3">Wealth Management</p>
+<p class="text-body-md font-body-md text-on-surface-variant line-clamp-2 mb-4">Strategic financial planning and portfolio optimization for high-net-worth individuals.</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/20">
+<span class="text-body-lg font-body-lg font-bold text-primary">$250<span class="text-body-md font-body-md text-on-surface-variant font-normal">/hr</span></span>
+<button class="text-label-md font-label-md text-secondary hover:text-primary transition-colors font-semibold">View Profile</button>
+</div>
+</div>
+</div>
+<!-- Premium Card 3 -->
+<div class="bg-white rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20 overflow-hidden group transition-all duration-300 hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:border-secondary relative">
+<div class="relative h-48 w-full bg-surface-variant overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A stylish portrait of a female creative director in a minimalist, sunlit studio space. She is dressed in chic, understated black attire. The environment features clean white walls and minimal architectural details, reflecting a modern, sophisticated aesthetic typical of a premium global marketplace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVFi9pt6b39gHw-5dy_B_29KueTb6hELSPh1zH2j6FbV2CRdIADeFFkO7XT46PyvXd91CHwxasmfUyn5oVn6_fOblyHVVeWxpwo84QBBomerjM9jdRF9_j9WFgTYneZmrantIyi4X8JcU0T5QpMAlo11BjZPR8HSYjLSAL5wHFxE47OhsgV8jQ6U_haU-xsBzBiv7RksuMRGTeG5GOyRQIqt73Dyj4P8bJ8haIr06cMtXtn_Gs2hyF7Q"/>
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-label-sm font-label-sm font-bold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[#D4AF37]" style="font-size: 16px; font-variation-settings: 'FILL' 1;">star</span> 5.0
+                        </div>
+</div>
+<div class="p-stack-md">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-headline-md font-headline-md text-[#131a33]">Elena Rodriguez</h3>
+</div>
+<p class="text-label-md font-label-md text-secondary mb-3">Brand Strategy Director</p>
+<p class="text-body-md font-body-md text-on-surface-variant line-clamp-2 mb-4">Elevating global brands through cohesive narrative and visual identity transformation.</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/20">
+<span class="text-body-lg font-body-lg font-bold text-primary">$200<span class="text-body-md font-body-md text-on-surface-variant font-normal">/hr</span></span>
+<button class="text-label-md font-label-md text-secondary hover:text-primary transition-colors font-semibold">View Profile</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex justify-center mt-stack-lg gap-2">
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-outline-variant/20 text-on-surface-variant hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center bg-primary text-white font-label-md">1</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-outline-variant/20 text-on-surface-variant hover:bg-surface-variant transition-colors font-label-md">2</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-outline-variant/20 text-on-surface-variant hover:bg-surface-variant transition-colors font-label-md">3</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-outline-variant/20 text-on-surface-variant hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-stack-lg bg-primary dark:bg-tertiary mt-auto">
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-stack-lg">
+<div class="flex flex-col gap-4">
+<span class="text-headline-md font-headline-md text-white">UstadHub</span>
+<p class="text-body-md font-body-md text-outline-variant dark:text-on-surface-variant">© 2024 UstadHub Premium Marketplace. All rights reserved.</p>
+</div>
+<div class="flex flex-col gap-3">
+<a class="text-label-sm font-label-sm text-outline-variant dark:text-on-surface-variant hover:text-tertiary-fixed-dim transition-colors duration-200 focus:underline decoration-tertiary-fixed-dim underline-offset-4" href="#">About Us</a>
+<a class="text-label-sm font-label-sm text-outline-variant dark:text-on-surface-variant hover:text-tertiary-fixed-dim transition-colors duration-200 focus:underline decoration-tertiary-fixed-dim underline-offset-4" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col gap-3">
+<a class="text-label-sm font-label-sm text-outline-variant dark:text-on-surface-variant hover:text-tertiary-fixed-dim transition-colors duration-200 focus:underline decoration-tertiary-fixed-dim underline-offset-4" href="#">Privacy Policy</a>
+<a class="text-label-sm font-label-sm text-outline-variant dark:text-on-surface-variant hover:text-tertiary-fixed-dim transition-colors duration-200 focus:underline decoration-tertiary-fixed-dim underline-offset-4" href="#">Contact Support</a>
+</div>
+<div class="flex flex-col gap-3">
+<a class="text-label-sm font-label-sm text-outline-variant dark:text-on-surface-variant hover:text-tertiary-fixed-dim transition-colors duration-200 focus:underline decoration-tertiary-fixed-dim underline-offset-4" href="#">Global Partners</a>
+</div>
+</div>
+</footer>
+</body></html>
