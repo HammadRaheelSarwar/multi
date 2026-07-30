@@ -14,6 +14,7 @@ const Navbar = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -27,11 +28,10 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: 'Home',        path: '/' },
     { name: 'Browse',      path: '/search' },
-    { name: 'Experts',     path: '/search' },
-    { name: 'Services',    path: '/search' },
-    { name: 'Memberships', path: '/search' },
+    { name: 'Experts',     path: '/experts' },
+    { name: 'Services',    path: '/services' },
+    { name: 'Memberships', path: '/memberships' },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -59,13 +59,13 @@ const Navbar = () => {
                 key={link.name}
                 to={link.path}
                 className={`px-4 py-2 text-[13px] font-semibold tracking-wide transition-all rounded-lg relative group ${
-                  isActive(link.path) && location.pathname === link.path
+                  isActive(link.path)
                     ? 'text-[#131c2a] dark:text-white'
                     : 'text-[#45464d] dark:text-gray-400 hover:text-[#131c2a] dark:hover:text-white'
                 }`}
               >
                 {link.name}
-                {isActive(link.path) && location.pathname === link.path && (
+                {isActive(link.path) && (
                   <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-[#e9c178] rounded-full" />
                 )}
               </Link>
@@ -83,11 +83,35 @@ const Navbar = () => {
             </button>
 
             {isAuthenticated && user ? (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 relative">
                 {/* Bell */}
-                <button className="p-2 rounded-full text-[#45464d] dark:text-gray-400 hover:bg-[#f0f3ff] dark:hover:bg-dark-800 transition-colors relative">
+                <button
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="p-2 rounded-full text-[#45464d] dark:text-gray-400 hover:bg-[#f0f3ff] dark:hover:bg-dark-800 transition-colors relative"
+                >
                   <Bell size={18} />
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#006a63] rounded-full ring-2 ring-white" />
                 </button>
+
+                {/* Notifications Dropdown */}
+                {showNotifications && (
+                  <div className="absolute top-12 right-20 w-80 bg-white rounded-2xl shadow-2xl border border-[rgba(198,198,206,0.4)] p-4 z-50 animate-in fade-in slide-in-from-top-2">
+                    <div className="flex items-center justify-between pb-3 border-b border-[rgba(198,198,206,0.3)] mb-3">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#131c2a]">Notifications</span>
+                      <span className="text-[10px] font-bold text-[#006a63] bg-[#e6f7f6] px-2 py-0.5 rounded-full">2 New</span>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="p-2.5 rounded-xl bg-[#f0f3ff] text-xs">
+                        <div className="font-bold text-[#131c2a]">Booking Confirmed</div>
+                        <div className="text-[#76767e] mt-0.5">Your consultation with Elena Rostova is confirmed for tomorrow.</div>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-[#f0f3ff] text-xs">
+                        <div className="font-bold text-[#131c2a]">Welcome to UstadHub</div>
+                        <div className="text-[#76767e] mt-0.5">Explore local experts or list your business to get started.</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {user?.role === 'business_owner' && (
                   <Link

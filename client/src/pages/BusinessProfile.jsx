@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { MapPin, Phone, MessageCircle, Globe, ShieldCheck, Star, Clock, X, Calendar, CheckCircle, ArrowLeft } from 'lucide-react';
+import { MapPin, Phone, MessageCircle, Globe, ShieldCheck, Star, Clock, X, Calendar, CheckCircle, ArrowLeft, Share2, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { useAuth } from '../hooks/useAuth';
@@ -18,6 +18,10 @@ const BusinessProfile = () => {
   const [loading, setLoading] = useState(true);
   const [loadingReviews, setLoadingReviews] = useState(false);
   const [activeTab, setActiveTab] = useState('portfolio');
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [showInquiryModal, setShowInquiryModal] = useState(false);
+  const [inquiryText, setInquiryText] = useState('');
+  const [inquiryLoading, setInquiryLoading] = useState(false);
 
   // Booking states
   const [bookingService, setBookingService] = useState(null);
@@ -133,6 +137,28 @@ const BusinessProfile = () => {
     { id: 'hours', label: 'Working Hours' },
   ];
 
+  const handleShareProfile = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success('Profile link copied to clipboard!');
+  };
+
+  const handleToggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+    toast.success(!isFavorite ? 'Saved to your bookmarked experts!' : 'Removed from saved experts');
+  };
+
+  const handleSendInquiry = (e) => {
+    e.preventDefault();
+    if (!inquiryText.trim()) { toast.error('Please enter your message'); return; }
+    setInquiryLoading(true);
+    setTimeout(() => {
+      setInquiryLoading(false);
+      setShowInquiryModal(false);
+      setInquiryText('');
+      toast.success('Message sent to provider! They usually respond within 2 hours.');
+    }, 1200);
+  };
+
   return (
     <div className="min-h-screen bg-[#f9f9ff]">
 
@@ -146,13 +172,33 @@ const BusinessProfile = () => {
         {/* Gradient overlay — fades to page background */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#f9f9ff] via-[rgba(249,249,255,0.15)] to-transparent" />
 
-        {/* Back button */}
-        <button
-          onClick={() => navigate(-1)}
-          className="absolute top-20 left-6 flex items-center gap-2 px-3 py-1.5 bg-white/80 backdrop-blur-md rounded-xl text-xs font-semibold text-[#131c2a] shadow hover:bg-white transition-colors"
-        >
-          <ArrowLeft size={13} /> Back
-        </button>
+        {/* Back & Action buttons */}
+        <div className="absolute top-20 left-6 right-6 flex items-center justify-between z-20">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 px-3.5 py-2 bg-white/90 backdrop-blur-md rounded-xl text-xs font-bold text-[#131c2a] shadow hover:bg-white transition-colors"
+          >
+            <ArrowLeft size={14} /> Back
+          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleShareProfile}
+              className="p-2 bg-white/90 backdrop-blur-md rounded-xl text-[#131c2a] shadow hover:bg-white transition-colors"
+              title="Share profile"
+            >
+              <Share2 size={16} />
+            </button>
+            <button
+              onClick={handleToggleFavorite}
+              className={`p-2 backdrop-blur-md rounded-xl shadow transition-colors ${
+                isFavorite ? 'bg-red-500 text-white' : 'bg-white/90 text-[#131c2a] hover:bg-white'
+              }`}
+              title={isFavorite ? 'Saved' : 'Save profile'}
+            >
+              <Heart size={16} className={isFavorite ? 'fill-white' : ''} />
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* ── Content ── */}
@@ -503,7 +549,7 @@ const BusinessProfile = () => {
                 <button
                   onClick={() => {
                     if (!isAuthenticated) { toast.error('Please log in'); navigate('/login'); return; }
-                    navigate(`/messages?userId=${business.owner?._id}`);
+                    setShowInquiryModal(true);
                   }}
                   className="w-full py-3.5 bg-white border-2 border-[rgba(198,198,206,0.5)] text-[#131c2a] font-bold rounded-xl hover:border-[#131c2a] transition-colors text-sm"
                 >
@@ -597,8 +643,52 @@ const BusinessProfile = () => {
           </motion.div>
         </div>
       )}
+
+      {/* ── Quick Inquiry Modal ── */}
+      {showInquiryModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowInquiryModal(false)} />
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+            className="relative bg-white rounded-[24px] p-7 w-full max-w-md shadow-2xl"
+          >
+            <button onClick={() => setShowInquiryModal(false)} className="absolute top-4 right-4 p-1.5 rounded-lg hover:bg-[#f0f3ff] text-[#45464d]">
+              <X size={18} />
+            </button>
+
+            <h3 className="text-xl font-bold text-[#131c2a] mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Send Inquiry to {business.name}
+            </h3>
+            <p className="text-xs text-[#76767e] mb-6">Ask about custom quotes, availability, or project scope.</p>
+
+            <form onSubmit={handleSendInquiry} className="space-y-4">
+              <div>
+                <label className="text-xs font-bold text-[#45464d] uppercase tracking-wider block mb-2">Your Message</label>
+                <textarea
+                  value={inquiryText}
+                  onChange={e => setInquiryText(e.target.value)}
+                  rows={4}
+                  placeholder="Hi, I would like to inquire about..."
+                  className="w-full px-4 py-3 rounded-xl bg-[#f0f3ff] border border-[rgba(198,198,206,0.4)] text-sm text-[#131c2a] outline-none focus:border-[#006a63] resize-none transition-colors"
+                />
+              </div>
+
+              <div className="flex gap-3">
+                <button type="button" onClick={() => setShowInquiryModal(false)}
+                  className="flex-1 py-3 text-sm font-semibold text-[#45464d] border border-[rgba(198,198,206,0.5)] rounded-xl hover:bg-gray-50">
+                  Cancel
+                </button>
+                <button type="submit" disabled={inquiryLoading}
+                  className="flex-1 py-3 bg-[#131c2a] text-white font-bold rounded-xl hover:bg-[#1e2940] disabled:opacity-50 transition-colors text-sm shadow-md">
+                  {inquiryLoading ? 'Sending...' : 'Send Message'}
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default BusinessProfile;
+

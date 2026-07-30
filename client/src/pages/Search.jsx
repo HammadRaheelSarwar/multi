@@ -6,16 +6,21 @@ import BusinessCard from '../components/business/BusinessCard';
 import Spinner from '../components/common/Spinner';
 import api from '../services/api';
 
-const Search = () => {
+const Search = ({ initialTab = 'all' }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [viewMode, setViewMode] = useState('grid');
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+  useEffect(() => {
+    if (initialTab) setActiveTab(initialTab);
+  }, [initialTab]);
 
   const [filters, setFilters] = useState({
     verifiedOnly: searchParams.get('verifiedOnly') === 'true',
@@ -248,13 +253,36 @@ const Search = () => {
 
           {/* ─── Results ─── */}
           <div className="flex-1 min-w-0">
+            {/* View Filter Tabs (All / Experts / Services) */}
+            <div className="flex items-center gap-2 mb-6 border-b border-[rgba(198,198,206,0.35)] pb-3">
+              {[
+                { id: 'all', label: 'All Marketplace' },
+                { id: 'experts', label: 'Experts & Businesses' },
+                { id: 'services', label: 'Direct Services' },
+              ].map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setActiveTab(t.id)}
+                  className={`px-4 py-2 text-xs font-bold rounded-xl transition-all ${
+                    activeTab === t.id
+                      ? 'bg-[#131c2a] text-white shadow-sm'
+                      : 'bg-white text-[#45464d] border border-[rgba(198,198,206,0.5)] hover:border-[#131c2a]'
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
             {/* Header row */}
             <div className="flex items-end justify-between mb-8">
               <div>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-[#131c2a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                  Browse Experts
+                  {activeTab === 'services' ? 'Explore Services' : activeTab === 'experts' ? 'Top Verified Experts' : 'Browse Marketplace'}
                 </h1>
-                <p className="mt-1.5 text-sm text-[#45464d]">Discover elite professionals tailored to your needs.</p>
+                <p className="mt-1.5 text-sm text-[#45464d]">
+                  {activeTab === 'services' ? 'Find and book instant services from certified local providers.' : 'Discover elite professionals tailored to your needs.'}
+                </p>
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-xs text-[#76767e] font-medium hidden sm:block">

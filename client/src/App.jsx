@@ -18,6 +18,7 @@ const Home            = lazy(() => import('./pages/Home'));
 const Search          = lazy(() => import('./pages/Search'));
 const BusinessProfile = lazy(() => import('./pages/BusinessProfile'));
 const Profile         = lazy(() => import('./pages/Profile'));
+const Memberships     = lazy(() => import('./pages/Memberships'));
 const CategorySelect  = lazy(() => import('./pages/CategorySelect'));
 const NotFound        = lazy(() => import('./pages/NotFound'));
 
@@ -76,6 +77,9 @@ const App = () => {
           <Route element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="search"              element={<Search />} />
+            <Route path="experts"             element={<Search initialTab="experts" />} />
+            <Route path="services"            element={<Search initialTab="services" />} />
+            <Route path="memberships"         element={<Memberships />} />
             <Route path="business/:slug"      element={<BusinessProfile />} />
             <Route element={<ProtectedRoute />}>
               <Route path="profile" element={<Profile />} />
