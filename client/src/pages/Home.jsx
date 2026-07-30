@@ -172,7 +172,7 @@ const Home = () => {
       </section>
 
       {/* ─────────────── CATEGORIES ─────────────── */}
-      <section className="py-24 px-4 bg-white dark:bg-dark-900 home-section">
+      <section className="py-24 px-4 premium-section home-section">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -213,7 +213,7 @@ const Home = () => {
       </section>
 
       {/* ─────────────── FEATURED BUSINESSES ─────────────── */}
-      <section className="py-24 px-4 bg-[#f4f6fa] dark:bg-dark-800 home-section">
+      <section className="py-24 px-4 premium-section home-section">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -254,7 +254,7 @@ const Home = () => {
       </section>
 
       {/* ─────────────── RECENT BUSINESSES ─────────────── */}
-      <section className="py-20 px-4 bg-white dark:bg-dark-900">
+      <section className="py-20 px-4 premium-section">
         <div className="max-w-7xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white font-outfit">Recently Joined Businesses</h2>
@@ -275,7 +275,7 @@ const Home = () => {
       </section>
 
       {/* ─────────────── TOP RATED ─────────────── */}
-      <section className="py-20 px-4 bg-gray-50 dark:bg-dark-800">
+      <section className="py-20 px-4 premium-section">
         <div className="max-w-7xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white font-outfit">Top Rated Businesses</h2>
@@ -296,7 +296,7 @@ const Home = () => {
       </section>
 
       {/* ─────────────── TRENDING SERVICES ─────────────── */}
-      <section className="py-20 px-4 bg-white dark:bg-dark-900">
+      <section className="py-20 px-4 premium-section">
         <div className="max-w-7xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white font-outfit">Trending Services</h2>
@@ -328,7 +328,7 @@ const Home = () => {
       </section>
 
       {/* ─────────────── LATEST REVIEWS ─────────────── */}
-      <section className="py-20 px-4 bg-gray-50 dark:bg-dark-800">
+      <section className="py-20 px-4 premium-section">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

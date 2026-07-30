@@ -27,9 +27,9 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="w-64 bg-slate-900 flex flex-col h-full shadow-xl shrink-0">
+    <aside className="w-72 bg-gradient-to-b from-[#0b1224] via-[#111a34] to-[#0b1020] flex flex-col h-full shadow-2xl shadow-blue-950/20 shrink-0">
       {/* Logo */}
-      <div className="px-6 py-5 border-b border-slate-800">
+      <div className="px-6 py-7 border-b border-white/10">
         <span className="text-xl font-bold font-outfit bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
           Ustad Hub Admin
         </span>
@@ -45,8 +45,8 @@ const Sidebar = () => {
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 isActive
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/30'
+                  : 'text-slate-400 hover:bg-white/10 hover:text-slate-100'
               }`
             }
           >

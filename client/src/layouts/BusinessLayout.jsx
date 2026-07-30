@@ -49,10 +49,10 @@ const BusinessLayout = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-dark-900 overflow-hidden transition-colors duration-300">
+    <div className="flex h-screen bg-[#f5f7fb] dark:bg-dark-900 overflow-hidden transition-colors duration-300">
       {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex md:flex-col md:w-64 bg-white dark:bg-dark-800 border-r border-gray-200 dark:border-dark-700 transition-colors duration-300">
-        <div className="flex items-center gap-2 px-6 py-5 border-b border-gray-200 dark:border-dark-700">
+      <aside className="hidden md:flex md:flex-col md:w-72 bg-white/90 dark:bg-dark-800/90 border-r border-gray-200/70 dark:border-dark-700 transition-colors duration-300 shadow-xl shadow-slate-900/5">
+        <div className="flex items-center gap-2 px-6 py-6 border-b border-gray-200/70 dark:border-dark-700">
           <span className="text-xl font-bold font-outfit tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
             Ustad Hub
           </span>
@@ -71,7 +71,7 @@ const BusinessLayout = () => {
                 to={item.path}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                   isActive
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/25'
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-dark-700/50 hover:text-gray-900 dark:hover:text-white'
                 }`}
               >
@@ -108,7 +108,7 @@ const BusinessLayout = () => {
       {/* Main Panel */}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Topbar */}
-        <header className="flex items-center justify-between px-6 py-4 bg-white dark:bg-dark-800 border-b border-gray-200 dark:border-dark-700 transition-colors duration-300">
+        <header className="flex items-center justify-between px-6 py-5 bg-white/85 dark:bg-dark-800/85 backdrop-blur-xl border-b border-gray-200/70 dark:border-dark-700 transition-colors duration-300">
           {/* Mobile hamburger menu trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -161,7 +161,7 @@ const BusinessLayout = () => {
         </header>
 
         {/* Scrollable Main Area */}
-        <main className="flex-1 overflow-y-auto p-6 bg-gray-50 dark:bg-dark-900 transition-colors duration-300">
+        <main className="flex-1 overflow-y-auto p-6 lg:p-8 bg-[#f5f7fb] dark:bg-dark-900 transition-colors duration-300">
           <Outlet />
         </main>
       </div>

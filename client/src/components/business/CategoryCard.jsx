@@ -36,7 +36,7 @@ const CategoryCard = ({ category, index = 0 }) => {
       onClick={handleClick}
       className="cursor-pointer group"
     >
-      <div className={`relative bg-gradient-to-br ${gradient} rounded-2xl p-6 flex flex-col items-center gap-3 shadow-lg hover:shadow-xl transition-shadow`}>
+      <div className={`relative bg-gradient-to-br ${gradient} rounded-3xl p-6 flex flex-col items-center gap-3 shadow-lg shadow-slate-900/10 hover:shadow-2xl transition-shadow`}>
         {/* Glow effect on hover */}
         <div className="absolute inset-0 rounded-2xl bg-white/0 group-hover:bg-white/10 transition-colors duration-300" />
 

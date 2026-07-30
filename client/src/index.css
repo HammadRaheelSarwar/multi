@@ -176,3 +176,29 @@
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
+
+/* Premium global surface system */
+.premium-card {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 12px 35px rgba(30, 64, 175, 0.06);
+  backdrop-filter: blur(14px);
+}
+.premium-card:hover {
+  border-color: rgba(147, 197, 253, 0.8);
+  box-shadow: 0 22px 45px rgba(30, 64, 175, 0.13);
+}
+.dark .premium-card {
+  background: rgba(17, 24, 39, 0.82);
+  border-color: rgba(71, 85, 105, 0.55);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
+}
+.dark .premium-card:hover { border-color: rgba(96, 165, 250, 0.5); }
+
+.premium-section {
+  position: relative;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+}
+.dark .premium-section {
+  background: linear-gradient(180deg, #0a0f1e 0%, #111827 100%);
+}
