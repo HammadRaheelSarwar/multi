@@ -9,11 +9,15 @@ process.on('uncaughtException', (err) => {
 });
 
 const app = require('./app');
-const connectDB = require('./config/db');
+const { supabaseAdmin, isSupabaseServerConfigured } = require('./config/supabase');
 const { initSocket } = require('./sockets/socket');
 
-// Connect to MongoDB Database
-connectDB();
+// Verify Supabase connection
+if (isSupabaseServerConfigured()) {
+  console.log('✅ Supabase Admin client ready');
+} else {
+  console.warn('⚠️  SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not set — running in degraded mode');
+}
 
 // Create HTTP server
 const server = http.createServer(app);

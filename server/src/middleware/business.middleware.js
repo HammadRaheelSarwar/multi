@@ -1,4 +1,4 @@
-const Business = require('../models/Business');
+const { supabaseAdmin } = require('../config/supabase');
 
 const isBusinessOwner = async (req, res, next) => {
   try {
@@ -7,22 +7,25 @@ const isBusinessOwner = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Business ID is required' });
     }
 
-    const business = await Business.findById(businessId);
-    if (!business) {
+    const { data: business, error } = await supabaseAdmin
+      .from('businesses')
+      .select('id, owner_id')
+      .eq('id', businessId)
+      .single();
+
+    if (error || !business) {
       return res.status(404).json({ success: false, message: 'Business not found' });
     }
 
-    if (business.owner.toString() !== req.user._id.toString() && req.user.role !== 'super_admin') {
+    if (business.owner_id !== req.user.id && req.user.role !== 'super_admin') {
       return res.status(403).json({ success: false, message: 'Only the business owner is authorized' });
     }
 
     req.business = business;
     next();
-  } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
   }
 };
 
-module.exports = {
-  isBusinessOwner,
-};
+module.exports = { isBusinessOwner };

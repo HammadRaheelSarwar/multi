@@ -27,6 +27,7 @@ const Login          = lazy(() => import('./pages/auth/Login'));
 const Register       = lazy(() => import('./pages/auth/Register'));
 const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
 const ResetPassword  = lazy(() => import('./pages/auth/ResetPassword'));
+const AuthCallback   = lazy(() => import('./pages/auth/AuthCallback'));
 
 // ──────────────── Lazy-loaded admin pages ────────────────
 const AdminDashboard   = lazy(() => import('./pages/admin/AdminDashboard'));
@@ -75,6 +76,7 @@ const App = () => {
         <Routes>
           {/* ───── Public / Customer Routes (with Navbar + Footer) ───── */}
           <Route element={<MainLayout />}>
+            <Route path="auth/callback" element={<AuthCallback />} />
             <Route index element={<Home />} />
             <Route path="search"              element={<Search />} />
             <Route path="experts"             element={<Search initialTab="experts" />} />

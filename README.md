@@ -8,13 +8,22 @@ A full-featured local services marketplace platform built with the MERN stack un
 |---|---|
 | **Frontend** | React 18, Vite, Tailwind CSS, Framer Motion |
 | **Backend** | Node.js, Express.js |
-| **Database** | MongoDB, Mongoose |
-| **Auth** | JWT (Access + Refresh Tokens), bcrypt |
+| **Database** | Supabase PostgreSQL |
+| **Auth** | Supabase Auth (email/password + Google OAuth) |
 | **State** | Redux Toolkit |
 | **HTTP** | Axios |
 | **Real-time** | Socket.io |
 | **Email** | Nodemailer |
-| **Uploads** | Multer + Cloudinary |
+| **Uploads** | Supabase Storage |
+
+## Supabase setup
+
+1. Run `server/supabase-schema.sql` in the Supabase SQL Editor.
+2. Enable Google under Authentication → Providers and add `http://localhost:3000/auth/callback` as a redirect URL.
+3. Create `avatars`, `business-media`, and `service-images` Storage buckets with public-read/authenticated-write policies.
+4. Copy `server/.env.example` to `server/.env` and `client/.env.example` to `client/.env`, then fill in the project URL, anon key, and service-role key.
+
+Keep the service-role key on the server only; the browser uses the anon key and sends Supabase access tokens to Express.
 
 ## 📁 Project Structure
 

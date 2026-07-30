@@ -1,96 +1,113 @@
-const crypto = require('crypto');
-const axios = require('axios');
-const User = require('../models/User');
+const { supabaseAdmin } = require('../config/supabase');
 const asyncHandler = require('../utils/asyncHandler');
 const { sendSuccess, sendError } = require('../utils/apiResponse');
-const { generateAccessToken, generateRefreshToken } = require('../services/token.service');
 
-const processSocialUser = async (profile) => {
-  const { email, fullName, provider, providerId, avatar, phone, role } = profile;
-  if (!email) {
-    throw new Error('Email is required for social login');
+/**
+ * Exchange a Supabase OAuth session code for a full session.
+ * After Supabase redirects the user to /auth/callback, the client exchanges
+ * the PKCE code for a session. This route is kept for server-side flows.
+ *
+ * @route POST /api/auth/social/callback
+ */
+const oauthCallback = asyncHandler(async (req, res) => {
+  const { code } = req.body;
+
+  if (!code) {
+    return sendError(res, 'Authorization code is required', 400);
   }
 
-  let user = await User.findOne({ email });
-  if (!user) {
-    const password = crypto.randomBytes(32).toString('hex');
-    user = await User.create({
-      fullName,
-      email,
-      phone: phone || '',
-      avatar: avatar || '',
-      role: role || 'customer',
-      provider,
-      providerId,
-      isEmailVerified: true,
-      password,
+  const { data, error } = await supabaseAdmin.auth.exchangeCodeForSession(code);
+
+  if (error || !data.session) {
+    return sendError(res, error?.message || 'OAuth exchange failed', 401);
+  }
+
+  const { session, user } = data;
+
+  // Ensure profile row exists
+  const { data: existingProfile } = await supabaseAdmin
+    .from('profiles')
+    .select('id')
+    .eq('id', user.id)
+    .single();
+
+  if (!existingProfile) {
+    await supabaseAdmin.from('profiles').insert({
+      id: user.id,
+      full_name: user.user_metadata?.full_name || user.user_metadata?.name || user.email,
+      email: user.email,
+      avatar_url: user.user_metadata?.avatar_url || null,
+      role: user.user_metadata?.role || 'customer',
     });
   }
 
-  const accessToken = generateAccessToken(user);
-  const refreshToken = generateRefreshToken(user);
-  user.refreshTokens.push(refreshToken);
-  await user.save({ validateBeforeSave: false });
+  return sendSuccess(res, {
+    accessToken: session.access_token,
+    refreshToken: session.refresh_token,
+    user: {
+      id: user.id,
+      email: user.email,
+      fullName: user.user_metadata?.full_name || user.user_metadata?.name,
+      role: user.user_metadata?.role || 'customer',
+      avatar: user.user_metadata?.avatar_url || null,
+    },
+  }, 'OAuth login successful');
+});
 
-  user.password = undefined;
-  return { user, accessToken, refreshToken };
-};
+/**
+ * Legacy Google login via ID token (for apps using Google One-Tap).
+ * @route POST /api/auth/social/google
+ */
+const googleLogin = asyncHandler(async (req, res) => {
+  const { idToken, accessToken: googleAccessToken, role } = req.body;
 
-const googleLogin = asyncHandler(async (req, res, next) => {
-  const { idToken, role } = req.body;
-  if (!idToken) {
-    return sendError(res, 'Google ID token is required', 400);
+  if (!idToken && !googleAccessToken) {
+    return sendError(res, 'Google ID token or access token is required', 400);
   }
 
-  const googleUrl = `https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`;
-  const response = await axios.get(googleUrl);
-  if (response.status !== 200) {
-    return sendError(res, 'Invalid Google token', 401);
-  }
-
-  const data = response.data;
-  const profile = {
-    email: data.email,
-    fullName: data.name || data.email,
+  // Supabase handles Google OAuth natively — this endpoint is for legacy One-Tap flows
+  const { data, error } = await supabaseAdmin.auth.signInWithIdToken({
     provider: 'google',
-    providerId: data.sub,
-    avatar: data.picture,
-    phone: data.phone_number || '',
-    role,
-  };
+    token: idToken || googleAccessToken,
+  });
 
-  const authData = await processSocialUser(profile);
-  return sendSuccess(res, authData, 'Logged in with Google successfully');
-});
-
-const facebookLogin = asyncHandler(async (req, res, next) => {
-  const { accessToken, userID, role } = req.body;
-  if (!accessToken || !userID) {
-    return sendError(res, 'Facebook access token and user ID are required', 400);
+  if (error || !data.session) {
+    return sendError(res, error?.message || 'Google sign-in failed', 401);
   }
 
-  const fbUrl = `https://graph.facebook.com/${encodeURIComponent(userID)}?fields=id,name,email,picture&access_token=${encodeURIComponent(accessToken)}`;
-  const response = await axios.get(fbUrl);
-  if (response.status !== 200) {
-    return sendError(res, 'Invalid Facebook token', 401);
+  const { session, user } = data;
+
+  // Update role in user_metadata if provided
+  if (role) {
+    await supabaseAdmin.auth.admin.updateUserById(user.id, {
+      user_metadata: { ...user.user_metadata, role },
+    });
   }
 
-  const data = response.data;
-  const profile = {
-    email: data.email,
-    fullName: data.name || data.email,
-    provider: 'facebook',
-    providerId: data.id,
-    avatar: data.picture?.data?.url || '',
-    phone: '',
-    role,
-  };
-
-  const authData = await processSocialUser(profile);
-  return sendSuccess(res, authData, 'Logged in with Facebook successfully');
+  return sendSuccess(res, {
+    accessToken: session.access_token,
+    refreshToken: session.refresh_token,
+    user: {
+      id: user.id,
+      email: user.email,
+      fullName: user.user_metadata?.full_name || user.user_metadata?.name,
+      role: role || user.user_metadata?.role || 'customer',
+      avatar: user.user_metadata?.avatar_url || null,
+    },
+  }, 'Logged in with Google successfully');
 });
 
-module.exports = {
-  googleLogin,
-  facebookLogin,
-};
+/**
+ * Facebook login — Supabase handles Facebook OAuth natively via redirect.
+ * This endpoint processes the session after the redirect.
+ * @route POST /api/auth/social/facebook
+ */
+const facebookLogin = asyncHandler(async (req, res) => {
+  return sendError(
+    res,
+    'Facebook login uses Supabase OAuth redirect flow. Use the client-side signInWithOAuth({ provider: "facebook" }).',
+    400,
+  );
+});
+
+module.exports = { googleLogin, facebookLogin, oauthCallback };
