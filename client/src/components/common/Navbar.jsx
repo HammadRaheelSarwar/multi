@@ -47,10 +47,10 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-10">
+        <div className="flex justify-between items-center h-14">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Ustad Hub" className="h-12 w-auto object-contain" />
+            <img src="/logo.png" alt="Ustad Hub" className="h-16 sm:h-20 w-auto max-w-[190px] object-contain" />
           </Link>
 
           {/* Desktop Nav Links */}

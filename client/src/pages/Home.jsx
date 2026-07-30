@@ -66,9 +66,9 @@ const Home = () => {
   return (
     <div className="overflow-x-hidden">
       {/* ─────────────── HERO SECTION ─────────────── */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden z-0">
+      <section className="relative min-h-[760px] pt-24 pb-16 flex flex-col items-center justify-center text-center px-4 overflow-hidden z-0">
         {/* Gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50/30 to-white dark:from-dark-900 dark:via-[#0d1b3e] dark:to-[#1a1060] -z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(99,102,241,0.18),transparent_36%),linear-gradient(135deg,#eff6ff_0%,#f8faff_45%,#ffffff_100%)] dark:bg-[radial-gradient(circle_at_50%_20%,rgba(79,70,229,0.3),transparent_38%),linear-gradient(135deg,#0a0f1e_0%,#111b3d_55%,#17113d_100%)] -z-10" />
         {/* Decorative blobs */}
         <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-3xl -z-10" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-600/15 rounded-full blur-3xl -z-10" />
@@ -81,7 +81,7 @@ const Home = () => {
         >
           {/* Tag */}
           <motion.div variants={fadeUp} custom={0}>
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400">
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold bg-white/80 border border-blue-200 text-blue-600 shadow-lg shadow-blue-500/10 backdrop-blur dark:bg-white/10 dark:border-white/15 dark:text-blue-300">
               <Sparkles size={14} /> Ustad Hub - Book Smart. Live Easy.
             </span>
           </motion.div>
@@ -120,7 +120,7 @@ const Home = () => {
 
           {/* Headline */}
           <motion.h1 variants={fadeUp} custom={1}
-            className="text-5xl md:text-7xl font-extrabold text-gray-900 dark:text-white font-outfit leading-tight tracking-tight"
+            className="text-5xl md:text-8xl font-extrabold text-gray-900 dark:text-white font-outfit leading-[0.98] tracking-tight drop-shadow-sm"
           >
             Find Trusted<br />
             <span className="bg-gradient-to-r from-blue-600 via-indigo-500 to-violet-600 dark:from-blue-400 dark:via-indigo-400 dark:to-violet-400 bg-clip-text text-transparent">
@@ -131,14 +131,29 @@ const Home = () => {
 
           {/* Subtitle */}
           <motion.p variants={fadeUp} custom={2}
-            className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed"
           >
-            Browse real businesses, compare services, and book trusted local professionals from live MongoDB-backed listings.
+            Discover skilled professionals, compare trusted businesses, and book the right service for your life — all in one beautiful place.
           </motion.p>
 
           {/* Search Bar */}
           <motion.div variants={fadeUp} custom={3} className="flex justify-center">
             <SearchBar onSearch={handleSearch} />
+          </motion.div>
+
+          <motion.div variants={fadeUp} custom={4} className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <button onClick={() => navigate('/search')} className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-xl shadow-blue-600/25 transition hover:-translate-y-0.5 hover:bg-blue-700">
+              Explore services <ArrowRight size={16} />
+            </button>
+            <button onClick={() => navigate('/register')} className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/80 px-6 py-3 text-sm font-bold text-gray-700 shadow-lg backdrop-blur transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 dark:border-white/15 dark:bg-white/10 dark:text-gray-200">
+              List your business
+            </button>
+          </motion.div>
+
+          <motion.div variants={fadeUp} custom={5} className="mx-auto flex max-w-2xl flex-wrap items-center justify-center gap-x-8 gap-y-3 pt-5 text-xs font-semibold text-gray-500 dark:text-gray-400">
+            <span className="inline-flex items-center gap-2"><Star size={15} className="fill-amber-400 text-amber-400" /> Trusted by local customers</span>
+            <span className="inline-flex items-center gap-2"><Briefcase size={15} className="text-blue-500" /> Real businesses</span>
+            <span className="inline-flex items-center gap-2"><Clock size={15} className="text-emerald-500" /> Book in minutes</span>
           </motion.div>
 
           {/* Stats Row */}
