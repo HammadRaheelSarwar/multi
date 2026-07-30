@@ -65,7 +65,7 @@ const Search = () => {
   return (
     <div className="min-h-screen bg-[#f9f9ff] dark:bg-dark-900 pt-24 pb-16">
       {/* Search Header */}
-      <div className="bg-[#131a33] border-b border-[#28313f] py-7 px-4">
+      <div className="bg-white dark:bg-dark-800 border-b border-gray-200 dark:border-dark-700 py-7 px-4">
         <div className="max-w-7xl mx-auto">
           <SearchBar
             onSearch={handleSearch}
@@ -75,7 +75,7 @@ const Search = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 mt-8">
+      <div className="max-w-7xl mx-auto px-4 mt-12">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Filters Sidebar */}
           <aside className="lg:w-64 shrink-0">
@@ -133,7 +133,11 @@ const Search = () => {
 
           {/* Results Grid */}
           <div className="flex-1">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-end justify-between mb-6">
+              <div>
+                <h1 className="text-4xl md:text-5xl font-bold text-[#131c2a] dark:text-white tracking-tight">Browse Experts</h1>
+                <p className="mt-2 text-lg text-gray-500 dark:text-gray-400">Discover trusted professionals tailored to your needs.</p>
+              </div>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {loading ? 'Searching...' : `${total} businesses found`}
               </p>

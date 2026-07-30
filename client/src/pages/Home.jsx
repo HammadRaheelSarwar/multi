@@ -66,18 +66,21 @@ const Home = () => {
   return (
     <div className="overflow-x-hidden">
       {/* ─────────────── HERO SECTION ─────────────── */}
-      <section className="relative min-h-[790px] pt-28 pb-20 flex flex-col items-center justify-center text-center px-4 overflow-hidden z-0 home-section">
+      <section className="relative min-h-[790px] pt-28 pb-20 flex flex-col items-center justify-center text-left px-4 overflow-hidden z-0 home-section">
         {/* Gradient background */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_40%,rgba(0,106,99,0.35),transparent_32%),linear-gradient(135deg,#071426_0%,#101f36_55%,#071426_100%)] -z-10" />
         {/* Decorative blobs */}
         <div className="absolute top-20 left-10 w-72 h-72 bg-[#006a63]/20 rounded-full blur-3xl -z-10" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#e9c178]/10 rounded-full blur-3xl -z-10" />
+        <div className="hidden lg:block absolute right-[8%] top-28 w-[390px] h-[520px] rounded-[46%] border border-[#e9c178]/40 bg-[#006a63]/30 p-3 shadow-2xl shadow-black/30 rotate-3">
+          <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=700&q=85" alt="Trusted Ustad Hub professional" className="h-full w-full rounded-[44%] object-cover opacity-90" />
+        </div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 dark:bg-blue-900/10 rounded-full blur-3xl -z-10" />
 
         <motion.div
           initial="hidden"
           animate="visible"
-          className="max-w-5xl w-full space-y-6"
+          className="max-w-6xl w-full space-y-6 lg:pr-[390px]"
         >
           {/* Tag */}
           <motion.div variants={fadeUp} custom={0}>
@@ -131,17 +134,17 @@ const Home = () => {
 
           {/* Subtitle */}
           <motion.p variants={fadeUp} custom={2}
-            className="text-lg md:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-white/75 max-w-2xl leading-relaxed"
           >
             Discover skilled professionals, compare trusted businesses, and book the right service for your life — all in one beautiful place.
           </motion.p>
 
           {/* Search Bar */}
-          <motion.div variants={fadeUp} custom={3} className="flex justify-center">
+          <motion.div variants={fadeUp} custom={3} className="flex justify-start">
             <SearchBar onSearch={handleSearch} />
           </motion.div>
 
-          <motion.div variants={fadeUp} custom={4} className="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <motion.div variants={fadeUp} custom={4} className="flex flex-wrap items-center justify-start gap-3 pt-2">
             <button onClick={() => navigate('/search')} className="premium-button inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5">
               Explore services <ArrowRight size={16} />
             </button>
@@ -150,7 +153,7 @@ const Home = () => {
             </button>
           </motion.div>
 
-          <motion.div variants={fadeUp} custom={5} className="mx-auto flex max-w-2xl flex-wrap items-center justify-center gap-x-8 gap-y-3 pt-5 text-xs font-semibold text-gray-500 dark:text-gray-400">
+          <motion.div variants={fadeUp} custom={5} className="flex max-w-2xl flex-wrap items-center justify-start gap-x-8 gap-y-3 pt-5 text-xs font-semibold text-white/70">
             <span className="inline-flex items-center gap-2"><Star size={15} className="fill-amber-400 text-amber-400" /> Trusted by local customers</span>
             <span className="inline-flex items-center gap-2"><Briefcase size={15} className="text-blue-500" /> Real businesses</span>
             <span className="inline-flex items-center gap-2"><Clock size={15} className="text-emerald-500" /> Book in minutes</span>

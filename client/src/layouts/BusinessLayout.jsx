@@ -51,9 +51,9 @@ const BusinessLayout = () => {
   return (
     <div className="flex h-screen bg-[#f5f7fb] dark:bg-dark-900 overflow-hidden transition-colors duration-300">
       {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex md:flex-col md:w-72 bg-white/90 dark:bg-dark-800/90 border-r border-gray-200/70 dark:border-dark-700 transition-colors duration-300 shadow-xl shadow-slate-900/5">
+      <aside className="hidden md:flex md:flex-col md:w-80 bg-[#f9f9ff] dark:bg-dark-800/90 border-r border-gray-200/70 dark:border-dark-700 transition-colors duration-300 shadow-xl shadow-slate-900/5">
         <div className="flex items-center gap-2 px-6 py-6 border-b border-gray-200/70 dark:border-dark-700">
-          <span className="text-xl font-bold font-outfit tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
+          <span className="text-3xl font-bold font-outfit tracking-tight text-[#131a33] dark:text-white">
             Ustad Hub
           </span>
           <span className="text-xxs px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-semibold uppercase">
@@ -71,7 +71,7 @@ const BusinessLayout = () => {
                 to={item.path}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                   isActive
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/25'
+                    ? 'bg-[#dff5f2] text-[#006a63] shadow-none'
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-dark-700/50 hover:text-gray-900 dark:hover:text-white'
                 }`}
               >
