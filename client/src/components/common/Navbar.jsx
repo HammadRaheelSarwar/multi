@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { LogOut, Menu, X, Sun, Moon, User as UserIcon, LayoutDashboard, Store, Briefcase } from 'lucide-react';
+import { LogOut, Menu, X, Sun, Moon, User as UserIcon, LayoutDashboard, Briefcase, Search, Bell } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { toggleDarkMode } from '../../redux/slices/uiSlice';
 
@@ -15,15 +15,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Scroll transparency management
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 30);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -34,148 +27,153 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Explore', path: '/search' },
-    { name: 'Services', path: '/search' },
+    { name: 'Home',        path: '/' },
+    { name: 'Browse',      path: '/search' },
+    { name: 'Experts',     path: '/search' },
+    { name: 'Services',    path: '/search' },
+    { name: 'Memberships', path: '/search' },
   ];
+
+  const isActive = (path) => location.pathname === path;
 
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled
-        ? 'bg-white/90 dark:bg-dark-900/90 shadow-[0_8px_30px_rgba(16,24,40,0.08)] backdrop-blur-xl py-3'
-          : 'bg-white/60 dark:bg-dark-900/50 backdrop-blur-md py-4'
+        isScrolled || isOpen
+          ? 'bg-white/95 dark:bg-[#0a0f1e]/95 shadow-[0_4px_24px_rgba(19,28,42,0.08)] backdrop-blur-xl'
+          : 'bg-white/80 dark:bg-[#0a0f1e]/70 backdrop-blur-lg'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-14">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
+        <div className="flex items-center justify-between h-16">
+
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Ustad Hub" className="h-16 sm:h-20 w-auto max-w-[190px] object-contain" />
+          <Link to="/" className="flex items-center gap-2 shrink-0">
+            <img src="/logo.png" alt="UstadHub" className="h-14 sm:h-16 w-auto max-w-[180px] object-contain" />
           </Link>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
-                className={`text-[13px] font-semibold tracking-wide transition-colors ${
-                  location.pathname === link.path
-                    ? 'text-blue-500'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400'
+                className={`px-4 py-2 text-[13px] font-semibold tracking-wide transition-all rounded-lg relative group ${
+                  isActive(link.path) && location.pathname === link.path
+                    ? 'text-[#131c2a] dark:text-white'
+                    : 'text-[#45464d] dark:text-gray-400 hover:text-[#131c2a] dark:hover:text-white'
                 }`}
               >
                 {link.name}
+                {isActive(link.path) && location.pathname === link.path && (
+                  <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-[#e9c178] rounded-full" />
+                )}
               </Link>
             ))}
           </div>
 
           {/* Actions */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
             {/* Theme Toggle */}
             <button
               onClick={() => dispatch(toggleDarkMode())}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-800 text-gray-600 dark:text-gray-300 transition-colors"
+              className="p-2 rounded-full text-[#45464d] dark:text-gray-400 hover:bg-[#f0f3ff] dark:hover:bg-dark-800 transition-colors"
             >
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
 
             {isAuthenticated && user ? (
-              <div className="flex items-center gap-4">
-                {user?.role === 'business_owner' && (
-                  <div className="flex items-center gap-2">
-                    <Link
-                      to="/profile"
-                      className="inline-flex items-center gap-1 rounded-full border border-gray-200 px-3 py-2 text-xs font-semibold text-gray-700 hover:border-blue-200 hover:text-blue-600 dark:border-dark-700 dark:text-gray-300 dark:hover:border-blue-900/50 dark:hover:text-blue-300"
-                    >
-                      <UserIcon size={14} />
-                      Customer View
-                    </Link>
-                    <Link
-                      to="/business/profile"
-                      className="inline-flex items-center gap-1 rounded-full bg-blue-600 px-3 py-2 text-xs font-semibold text-white hover:bg-blue-700"
-                    >
-                      <Briefcase size={14} />
-                      Business Owner View
-                    </Link>
-                  </div>
-                )}
+              <div className="flex items-center gap-3">
+                {/* Bell */}
+                <button className="p-2 rounded-full text-[#45464d] dark:text-gray-400 hover:bg-[#f0f3ff] dark:hover:bg-dark-800 transition-colors relative">
+                  <Bell size={18} />
+                </button>
 
-                {/* Admin button shortcut */}
-                {['super_admin', 'admin', 'moderator'].includes(user?.role) && (
+                {user?.role === 'business_owner' && (
                   <Link
-                    to="/admin"
-                    className="flex items-center gap-2 rounded-full bg-blue-50 px-3 py-2 text-xs font-bold text-blue-600 hover:bg-blue-100 dark:bg-blue-950/30 dark:text-blue-300"
+                    to="/business/profile"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-[#006a63] hover:bg-[#00504a] rounded-lg transition-colors"
                   >
-                    <LayoutDashboard size={16} />
-                    <span>Admin</span>
+                    <Briefcase size={13} />
+                    Business View
                   </Link>
                 )}
 
-                {/* Prominent Role Badge */}
-                <div className="hidden lg:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 border border-blue-100 dark:border-blue-900/30 text-blue-700 dark:text-blue-300 shadow-sm transition-all hover:scale-105">
-                  {user?.role === 'business_owner' ? '💼 Business Owner' : '👤 Customer'}
-                </div>
+                {['super_admin', 'admin', 'moderator'].includes(user?.role) && (
+                  <Link
+                    to="/admin"
+                    className="flex items-center gap-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/30 px-3 py-2 text-xs font-bold text-amber-700 dark:text-amber-400 hover:bg-amber-100 transition-colors"
+                  >
+                    <LayoutDashboard size={14} />
+                    Admin
+                  </Link>
+                )}
 
-                {/* Profile avatar link */}
-                <Link to="/profile" className="flex items-center gap-2 bg-gray-50 dark:bg-dark-800 border border-gray-100 dark:border-dark-700/60 pl-2 pr-3 py-1 rounded-2xl hover:border-gray-200 dark:hover:border-dark-700 transition-colors">
+                {/* Profile avatar */}
+                <Link
+                  to="/profile"
+                  className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-2xl border border-[rgba(198,198,206,0.5)] hover:border-[#006a63]/40 transition-colors"
+                >
                   <img
                     src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80'}
                     alt={user?.fullName || 'User'}
-                    className="w-7 h-7 rounded-full border border-blue-500 object-cover"
+                    className="w-7 h-7 rounded-full border border-[#006a63]/50 object-cover"
                   />
                   <div className="flex flex-col text-left">
-                    <span className="text-xs font-bold text-gray-900 dark:text-white font-outfit max-w-[120px] truncate">
+                    <span className="text-xs font-bold text-[#131c2a] dark:text-white max-w-[110px] truncate">
                       {user?.fullName}
                     </span>
-                    <span className="text-[9px] uppercase tracking-wider font-semibold text-blue-600 dark:text-blue-400 -mt-0.5">
-                      {user?.role === 'business_owner' ? 'Businessman' : 'Customer'}
+                    <span className="text-[9px] uppercase tracking-wider font-semibold text-[#006a63] dark:text-emerald-400 -mt-0.5">
+                      {user?.role === 'business_owner' ? 'Business' : 'Customer'}
                     </span>
                   </div>
                 </Link>
 
-                {/* Logout */}
                 <button
                   onClick={handleLogout}
-                  className="p-2 text-gray-400 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-950/20 rounded-full transition-colors"
+                  className="p-2 text-[#76767e] hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-950/20 rounded-full transition-colors"
                   title="Logout"
                 >
-                  <LogOut size={18} />
+                  <LogOut size={16} />
                 </button>
               </div>
             ) : (
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500 transition-colors"
+                  className="px-4 py-2 text-sm font-semibold text-[#131c2a] dark:text-gray-300 hover:text-[#006a63] transition-colors"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-2 text-sm font-semibold text-[#131a33] bg-[#e9c178] hover:bg-[#f0cf8a] rounded-lg transition-colors shadow-sm"
+                  className="px-5 py-2 text-sm font-bold text-[#131c2a] bg-[#e9c178] hover:bg-[#f0cf8a] rounded-lg transition-colors shadow-sm"
                 >
-                  Register
+                  List Your Business
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-5 py-2 text-sm font-bold text-white bg-[#131c2a] hover:bg-[#1e2940] rounded-lg transition-colors"
+                >
+                  Get Started
                 </Link>
               </div>
             )}
           </div>
 
-          {/* Mobile hamburger menu toggle */}
-          <div className="md:hidden flex items-center gap-3">
-            {/* Theme Toggle (Mobile) */}
+          {/* Mobile toggle */}
+          <div className="md:hidden flex items-center gap-2">
             <button
               onClick={() => dispatch(toggleDarkMode())}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-800 text-gray-600 dark:text-gray-300"
+              className="p-2 rounded-full text-[#45464d] dark:text-gray-400"
             >
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-gray-600 dark:text-gray-300"
+              className="p-2 text-[#131c2a] dark:text-gray-300"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -183,96 +181,65 @@ const Navbar = () => {
 
       {/* Mobile Drawer */}
       {isOpen && (
-        <div className="md:hidden bg-white dark:bg-dark-900 border-b border-gray-200 dark:border-dark-800 py-4 px-6 shadow-lg animate-in fade-in slide-in-from-top duration-200">
-          <div className="flex flex-col gap-4">
+        <div className="md:hidden bg-white dark:bg-[#0a0f1e] border-t border-[rgba(198,198,206,0.4)] py-4 px-6 shadow-xl">
+          <div className="flex flex-col gap-2">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
                 onClick={() => setIsOpen(false)}
-                className="text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-500"
+                className={`px-4 py-2.5 text-sm font-medium rounded-xl transition-colors ${
+                  isActive(link.path)
+                    ? 'bg-[#e7eeff] text-[#006a63] font-semibold'
+                    : 'text-[#45464d] dark:text-gray-300 hover:bg-[#f0f3ff]'
+                }`}
               >
                 {link.name}
               </Link>
             ))}
-            
-            <hr className="border-gray-200 dark:border-dark-800" />
-            
+
+            <hr className="border-[rgba(198,198,206,0.4)] my-2" />
+
             {isAuthenticated && user ? (
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-3 px-2 py-1">
                   <img
                     src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80'}
                     alt={user?.fullName || 'User'}
-                    className="w-10 h-10 rounded-full object-cover border border-blue-500"
+                    className="w-10 h-10 rounded-full object-cover border-2 border-[#006a63]/40"
                   />
                   <div>
-                    <div className="font-bold text-gray-900 dark:text-white font-outfit">{user?.fullName}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</div>
-                    <span className="inline-block mt-1 px-2.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 text-[9px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 rounded-md">
-                      {user?.role === 'business_owner' ? 'Businessman' : 'Customer'}
-                    </span>
+                    <div className="font-bold text-[#131c2a] dark:text-white">{user?.fullName}</div>
+                    <div className="text-xs text-[#76767e]">{user?.email}</div>
                   </div>
                 </div>
 
-                {['super_admin', 'admin', 'moderator'].includes(user?.role) && (
-                  <Link
-                    to="/admin"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-2 text-base font-medium text-blue-500"
-                  >
-                    <LayoutDashboard size={18} />
-                    <span>Admin Panel</span>
+                {user?.role === 'business_owner' && (
+                  <Link to="/business/profile" onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-[#006a63] rounded-xl">
+                    <Briefcase size={16} /> Business Dashboard
                   </Link>
                 )}
 
-                {user?.role === 'business_owner' && (
-                  <div className="flex flex-col gap-2">
-                    <Link
-                      to="/profile"
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-2 text-base font-medium text-gray-700 dark:text-gray-300"
-                    >
-                      <UserIcon size={18} />
-                      <span>Customer View</span>
-                    </Link>
-                    <Link
-                      to="/business/profile"
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-2 text-base font-medium text-blue-500"
-                    >
-                      <Briefcase size={18} />
-                      <span>Business Owner View</span>
-                    </Link>
-                  </div>
-                )}
+                <Link to="/profile" onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-[#45464d] dark:text-gray-300 hover:bg-[#f0f3ff] rounded-xl">
+                  <UserIcon size={16} /> My Profile
+                </Link>
 
-                <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    handleLogout();
-                  }}
-                  className="flex items-center gap-2 text-base font-medium text-red-500 w-full text-left"
-                >
-                  <LogOut size={18} />
-                  <span>Logout</span>
+                <button onClick={() => { setIsOpen(false); handleLogout(); }}
+                  className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-red-500 w-full text-left hover:bg-red-50 rounded-xl">
+                  <LogOut size={16} /> Logout
                 </button>
               </div>
             ) : (
               <div className="flex flex-col gap-2">
-                <Link
-                  to="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="w-full text-center py-2 font-medium text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-800"
-                >
+                <Link to="/login" onClick={() => setIsOpen(false)}
+                  className="py-2.5 text-center font-semibold text-[#131c2a] dark:text-gray-300 rounded-xl border border-[rgba(198,198,206,0.5)] hover:bg-[#f0f3ff]">
                   Sign In
                 </Link>
-                <Link
-                  to="/register"
-                  onClick={() => setIsOpen(false)}
-                  className="w-full text-center py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-                >
-                  Register
+                <Link to="/register" onClick={() => setIsOpen(false)}
+                  className="py-2.5 text-center font-bold text-white bg-[#131c2a] rounded-xl hover:bg-[#1e2940]">
+                  Get Started
                 </Link>
               </div>
             )}

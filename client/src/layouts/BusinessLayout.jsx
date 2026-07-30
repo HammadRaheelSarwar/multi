@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import { Outlet, Navigate, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { 
-  LayoutDashboard, 
-  Store, 
-  Briefcase, 
-  CalendarCheck, 
-  MessageSquare, 
-  LogOut, 
-  Menu, 
-  X, 
-  Sun, 
-  Moon, 
-  User as UserIcon 
+import {
+  LayoutDashboard,
+  Store,
+  Briefcase,
+  CalendarCheck,
+  MessageSquare,
+  CreditCard,
+  Settings,
+  LogOut,
+  Menu,
+  X,
+  Sun,
+  Moon,
+  Bell,
+  User as UserIcon,
+  TrendingUp,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { toggleDarkMode } from '../redux/slices/uiSlice';
@@ -26,14 +30,10 @@ const BusinessLayout = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Security Gate
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   const allowedRoles = ['business_owner', 'super_admin', 'admin'];
-  if (!user || !allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />;
-  }
+  if (!user || !allowedRoles.includes(user.role)) return <Navigate to="/" replace />;
 
   const handleLogout = async () => {
     await logoutUser();
@@ -41,206 +41,214 @@ const BusinessLayout = () => {
   };
 
   const menuItems = [
-    { name: 'Overview', path: '/business', icon: <LayoutDashboard size={18} /> },
-    { name: 'My Profile', path: '/business/profile', icon: <Store size={18} /> },
-    { name: 'Services', path: '/business/services', icon: <Briefcase size={18} /> },
-    { name: 'Bookings', path: '/business/bookings', icon: <CalendarCheck size={18} /> },
-    { name: 'Reviews', path: '/business/reviews', icon: <MessageSquare size={18} /> },
+    { name: 'Dashboard',  path: '/business',          icon: <LayoutDashboard size={18} /> },
+    { name: 'My Profile', path: '/business/profile',  icon: <Store size={18} /> },
+    { name: 'Services',   path: '/business/services', icon: <Briefcase size={18} /> },
+    { name: 'Bookings',   path: '/business/bookings', icon: <CalendarCheck size={18} /> },
+    { name: 'Messages',   path: '/business/reviews',  icon: <MessageSquare size={18} /> },
+    { name: 'Payments',   path: '/business/reviews',  icon: <CreditCard size={18} /> },
+    { name: 'Settings',   path: '/business/reviews',  icon: <Settings size={18} /> },
   ];
 
+  const isActiveLink = (path) =>
+    location.pathname === path ||
+    (path === '/business' && location.pathname === '/business/overview');
+
   return (
-    <div className="flex h-screen bg-[#f5f7fb] dark:bg-dark-900 overflow-hidden transition-colors duration-300">
-      {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex md:flex-col md:w-80 bg-[#f9f9ff] dark:bg-dark-800/90 border-r border-gray-200/70 dark:border-dark-700 transition-colors duration-300 shadow-xl shadow-slate-900/5">
-        <div className="flex items-center gap-2 px-6 py-6 border-b border-gray-200/70 dark:border-dark-700">
-          <span className="text-3xl font-bold font-outfit tracking-tight text-[#131a33] dark:text-white">
-            Ustad Hub
-          </span>
-          <span className="text-xxs px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-semibold uppercase">
-            Partner
-          </span>
+    <div className="flex h-screen bg-[#f9f9ff] dark:bg-[#0a0f1e] overflow-hidden">
+
+      {/* ────── Sidebar — Desktop ────── */}
+      <aside className="hidden md:flex md:flex-col md:w-[240px] bg-white dark:bg-[#111827] border-r border-[rgba(198,198,206,0.35)] dark:border-[rgba(255,255,255,0.07)] transition-colors shadow-[4px_0_20px_rgba(19,28,42,0.04)]">
+
+        {/* Logo */}
+        <div className="px-6 py-6 border-b border-[rgba(198,198,206,0.3)] dark:border-[rgba(255,255,255,0.06)]">
+          <Link to="/" className="block">
+            <img src="/logo.png" alt="UstadHub" className="h-12 w-auto object-contain" />
+          </Link>
         </div>
 
-        {/* Sidebar Nav Links */}
-        <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+        {/* User Profile Card */}
+        <div className="mx-4 my-4 p-3.5 rounded-2xl bg-[#f0f3ff] dark:bg-[#1e2940] border border-[rgba(198,198,206,0.35)] dark:border-[rgba(255,255,255,0.07)]">
+          <div className="flex items-center gap-3">
+            <img
+              src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80'}
+              alt={user?.fullName}
+              className="w-10 h-10 rounded-xl object-cover border-2 border-[rgba(0,106,99,0.3)]"
+            />
+            <div className="overflow-hidden flex-1">
+              <div className="text-sm font-bold text-[#131c2a] dark:text-white truncate" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                {user?.fullName}
+              </div>
+              <div className="text-[10px] font-semibold text-[#006a63] dark:text-emerald-400 mt-0.5 uppercase tracking-wide">
+                Verified Professional
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 px-3 py-2 overflow-y-auto space-y-0.5">
           {menuItems.map((item) => {
-            const isActive = location.pathname === item.path || (item.path === '/business' && location.pathname === '/business/overview');
+            const active = isActiveLink(item.path);
             return (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                  isActive
-                    ? 'bg-[#dff5f2] text-[#006a63] shadow-none'
-                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-dark-700/50 hover:text-gray-900 dark:hover:text-white'
-                }`}
+                className={`uh-sidebar-link ${active ? 'active' : ''}`}
               >
-                {item.icon}
+                <span className={active ? 'text-[#006a63]' : 'text-[#76767e]'}>{item.icon}</span>
                 <span>{item.name}</span>
               </Link>
             );
           })}
         </nav>
 
-        {/* Sidebar Footer / User Info */}
-        <div className="p-4 border-t border-gray-200 dark:border-dark-700">
-          <div className="flex items-center gap-3 mb-4">
-            <img
-              src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80'}
-              alt={user?.fullName}
-              className="w-10 h-10 rounded-full border border-blue-500/50 object-cover"
-            />
-            <div className="overflow-hidden">
-              <div className="text-sm font-semibold text-gray-900 dark:text-white truncate">{user?.fullName}</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{user?.email}</div>
-            </div>
-          </div>
+        {/* Sidebar Footer */}
+        <div className="p-4 border-t border-[rgba(198,198,206,0.3)] dark:border-[rgba(255,255,255,0.06)] space-y-3">
+          {/* Promote Profile CTA */}
+          <button
+            onClick={() => navigate('/search')}
+            className="w-full py-3 bg-[#131c2a] dark:bg-white text-white dark:text-[#131c2a] text-sm font-bold rounded-xl hover:bg-[#1e2940] dark:hover:bg-gray-100 transition-colors flex items-center justify-center gap-2"
+          >
+            <TrendingUp size={15} /> Promote Profile
+          </button>
+
+          {/* Logout */}
           <button
             onClick={handleLogout}
-            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-red-200 dark:border-red-950/20 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/25 text-sm font-medium transition-colors"
+            className="w-full py-2.5 text-sm font-medium text-[#76767e] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-xl transition-colors flex items-center justify-center gap-2"
           >
-            <LogOut size={16} />
-            <span>Logout</span>
+            <LogOut size={15} /> Logout
           </button>
         </div>
       </aside>
 
-      {/* Main Panel */}
+      {/* ────── Main Panel ────── */}
       <div className="flex flex-col flex-1 overflow-hidden">
+
         {/* Topbar */}
-        <header className="flex items-center justify-between px-6 py-5 bg-white/85 dark:bg-dark-800/85 backdrop-blur-xl border-b border-gray-200/70 dark:border-dark-700 transition-colors duration-300">
-          {/* Mobile hamburger menu trigger */}
+        <header className="flex items-center justify-between px-6 py-4 bg-white/90 dark:bg-[#111827]/90 backdrop-blur-xl border-b border-[rgba(198,198,206,0.3)] dark:border-[rgba(255,255,255,0.06)] transition-colors shadow-sm">
+
+          {/* Mobile menu toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-xl md:hidden"
+            className="p-2 text-[#45464d] dark:text-gray-400 hover:bg-[#f0f3ff] dark:hover:bg-[#1e2940] rounded-xl md:hidden"
           >
             <Menu size={20} />
           </button>
 
-          {/* Page title depending on path */}
-          <h1 className="text-lg font-bold text-gray-900 dark:text-white font-outfit">
-            {menuItems.find(m => m.path === location.pathname)?.name || 'Business Partner Portal'}
+          {/* Welcome text */}
+          <div className="hidden md:block">
+            <h1 className="text-lg font-bold text-[#131c2a] dark:text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Welcome back, {user?.fullName?.split(' ')[0] || 'Partner'}
+            </h1>
+            <p className="text-xs text-[#76767e]">Here is what's happening with your business today.</p>
+          </div>
+
+          {/* Page title (mobile) */}
+          <h1 className="md:hidden text-sm font-bold text-[#131c2a] dark:text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            {menuItems.find(m => isActiveLink(m.path))?.name || 'Dashboard'}
           </h1>
 
-          <div className="flex items-center gap-4">
+          {/* Right actions */}
+          <div className="flex items-center gap-3">
+            {/* Customer view link */}
             {user?.role === 'business_owner' && (
-              <div className="hidden sm:flex items-center gap-2">
-                <Link
-                  to="/profile"
-                  className="inline-flex items-center gap-1 rounded-full border border-gray-200 px-3 py-2 text-xs font-semibold text-gray-700 hover:border-blue-200 hover:text-blue-600 dark:border-dark-700 dark:text-gray-300 dark:hover:border-blue-900/50 dark:hover:text-blue-300"
-                >
-                  <UserIcon size={14} />
-                  Customer View
-                </Link>
-                <Link
-                  to="/business/profile"
-                  className="inline-flex items-center gap-1 rounded-full bg-blue-600 px-3 py-2 text-xs font-semibold text-white hover:bg-blue-700"
-                >
-                  <Briefcase size={14} />
-                  Business Owner View
-                </Link>
-              </div>
+              <Link
+                to="/"
+                className="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-[#45464d] dark:text-gray-400 hover:text-[#006a63] dark:hover:text-emerald-400 border border-[rgba(198,198,206,0.5)] px-3 py-1.5 rounded-xl hover:border-[#006a63]/40 transition-all"
+              >
+                <UserIcon size={12} /> Customer View
+              </Link>
             )}
 
-            {/* Theme Toggle */}
+            {/* Theme toggle */}
             <button
               onClick={() => dispatch(toggleDarkMode())}
-              className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-xl transition-all"
+              className="p-2 text-[#45464d] dark:text-gray-400 hover:bg-[#f0f3ff] dark:hover:bg-[#1e2940] rounded-xl transition-colors"
             >
-              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+              {darkMode ? <Sun size={17} /> : <Moon size={17} />}
             </button>
 
-            {/* Public site back button */}
-            <Link
-              to="/"
-              className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              View Public Website
+            {/* Notifications */}
+            <button className="relative p-2 text-[#45464d] dark:text-gray-400 hover:bg-[#f0f3ff] dark:hover:bg-[#1e2940] rounded-xl transition-colors">
+              <Bell size={17} />
+              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#006a63] rounded-full" />
+            </button>
+
+            {/* Avatar */}
+            <Link to="/profile">
+              <img
+                src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80'}
+                alt={user?.fullName}
+                className="w-8 h-8 rounded-xl object-cover border-2 border-[rgba(0,106,99,0.3)] hover:border-[#006a63] transition-colors"
+              />
             </Link>
           </div>
         </header>
 
         {/* Scrollable Main Area */}
-        <main className="flex-1 overflow-y-auto p-6 lg:p-8 bg-[#f5f7fb] dark:bg-dark-900 transition-colors duration-300">
+        <main className="flex-1 overflow-y-auto bg-[#f9f9ff] dark:bg-[#0a0f1e] transition-colors">
           <Outlet />
         </main>
       </div>
 
-      {/* Mobile Drawer (Overlay) */}
+      {/* ────── Mobile Drawer ────── */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 flex md:hidden">
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
-          
-          <div className="relative flex flex-col w-64 bg-white dark:bg-dark-800 border-r border-gray-200 dark:border-dark-700 h-full p-4 animate-in slide-in-from-left duration-200">
-            <div className="flex items-center justify-between pb-4 mb-4 border-b border-gray-200 dark:border-dark-700">
-              <span className="text-lg font-bold font-outfit tracking-tight text-blue-600 dark:text-blue-400">
-                Ustad Hub Partner
-              </span>
-              <button onClick={() => setMobileMenuOpen(false)} className="p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-lg">
+
+          <div className="relative flex flex-col w-[240px] bg-white dark:bg-[#111827] h-full shadow-2xl">
+            {/* Header */}
+            <div className="flex items-center justify-between px-5 py-5 border-b border-[rgba(198,198,206,0.3)]">
+              <img src="/logo.png" alt="UstadHub" className="h-10 w-auto object-contain" />
+              <button onClick={() => setMobileMenuOpen(false)} className="p-1.5 rounded-lg hover:bg-[#f0f3ff] text-[#45464d]">
                 <X size={18} />
               </button>
             </div>
 
-            <nav className="flex-grow space-y-1">
-              {user?.role === 'business_owner' && (
-                <div className="mb-3 space-y-2 rounded-2xl border border-gray-100 bg-gray-50 p-3 dark:border-dark-700 dark:bg-dark-900">
-                  <Link
-                    to="/profile"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300"
-                  >
-                    <UserIcon size={16} />
-                    Customer View
-                  </Link>
-                  <Link
-                    to="/business/profile"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400"
-                  >
-                    <Briefcase size={16} />
-                    Business Owner View
-                  </Link>
+            {/* User card */}
+            <div className="mx-4 my-4 p-3 rounded-2xl bg-[#f0f3ff] dark:bg-[#1e2940]">
+              <div className="flex items-center gap-3">
+                <img
+                  src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80'}
+                  alt={user?.fullName}
+                  className="w-9 h-9 rounded-xl object-cover border border-[rgba(0,106,99,0.3)]"
+                />
+                <div className="overflow-hidden">
+                  <div className="text-sm font-bold text-[#131c2a] dark:text-white truncate">{user?.fullName}</div>
+                  <div className="text-[10px] text-[#006a63] font-semibold">Verified Professional</div>
                 </div>
-              )}
+              </div>
+            </div>
 
+            {/* Nav */}
+            <nav className="flex-1 px-3 py-2 space-y-0.5 overflow-y-auto">
               {menuItems.map((item) => {
-                const isActive = location.pathname === item.path || (item.path === '/business' && location.pathname === '/business/overview');
+                const active = isActiveLink(item.path);
                 return (
                   <Link
                     key={item.name}
                     to={item.path}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                      isActive
-                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-dark-700/50 hover:text-gray-900 dark:hover:text-white'
-                    }`}
+                    className={`uh-sidebar-link ${active ? 'active' : ''}`}
                   >
-                    {item.icon}
+                    <span className={active ? 'text-[#006a63]' : 'text-[#76767e]'}>{item.icon}</span>
                     <span>{item.name}</span>
                   </Link>
                 );
               })}
             </nav>
 
-            <div className="mt-auto border-t border-gray-200 dark:border-dark-700 pt-4">
-              <div className="flex items-center gap-3 mb-4">
-                <img
-                  src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80'}
-                  alt={user?.fullName}
-                  className="w-10 h-10 rounded-full border border-blue-500/50 object-cover"
-                />
-                <div className="overflow-hidden">
-                  <div className="text-sm font-semibold text-gray-900 dark:text-white truncate">{user?.fullName}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{user?.email}</div>
-                </div>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-red-200 dark:border-red-950/20 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/25 text-sm font-medium transition-colors"
-              >
-                <LogOut size={16} />
-                <span>Logout</span>
+            {/* Footer */}
+            <div className="p-4 border-t border-[rgba(198,198,206,0.3)] space-y-2">
+              <button onClick={() => { setMobileMenuOpen(false); navigate('/search'); }}
+                className="w-full py-2.5 bg-[#131c2a] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2">
+                <TrendingUp size={14} /> Promote Profile
+              </button>
+              <button onClick={() => { setMobileMenuOpen(false); handleLogout(); }}
+                className="w-full py-2.5 text-sm font-medium text-red-500 hover:bg-red-50 rounded-xl flex items-center justify-center gap-2">
+                <LogOut size={14} /> Logout
               </button>
             </div>
           </div>

@@ -9,39 +9,33 @@ const CategoryCard = ({ category, index = 0 }) => {
     navigate(`/search?category=${category.slug}`);
   };
 
-  const gradients = [
-    'from-blue-500 to-indigo-600',
-    'from-orange-400 to-red-500',
-    'from-emerald-400 to-teal-600',
-    'from-purple-500 to-violet-600',
-    'from-rose-400 to-pink-600',
-    'from-amber-400 to-orange-500',
-    'from-cyan-400 to-blue-500',
-    'from-fuchsia-500 to-purple-600',
-    'from-lime-400 to-emerald-600',
-    'from-sky-400 to-cyan-600',
-    'from-red-400 to-rose-600',
-    'from-indigo-400 to-violet-600',
+  // UstadHub palette — teal/champagne/navy accents
+  const palettes = [
+    { bg: 'bg-[#e7eeff]', icon: 'text-[#006a63]', text: 'text-[#131c2a]', border: 'border-[rgba(0,106,99,0.15)]' },
+    { bg: 'bg-[#fdf3e0]', icon: 'text-[#a07f3c]', text: 'text-[#131c2a]', border: 'border-[rgba(233,193,120,0.25)]' },
+    { bg: 'bg-[#f0f3ff]', icon: 'text-[#565d79]', text: 'text-[#131c2a]', border: 'border-[rgba(86,93,121,0.15)]' },
+    { bg: 'bg-[#e6f7f6]', icon: 'text-[#006a63]', text: 'text-[#131c2a]', border: 'border-[rgba(0,106,99,0.15)]' },
+    { bg: 'bg-[#fff4e8]', icon: 'text-[#a07f3c]', text: 'text-[#131c2a]', border: 'border-[rgba(233,193,120,0.2)]' },
+    { bg: 'bg-[#eef0ff]', icon: 'text-[#3e4660]', text: 'text-[#131c2a]', border: 'border-[rgba(62,70,96,0.12)]' },
   ];
 
-  const gradient = gradients[index % gradients.length];
+  const palette = palettes[index % palettes.length];
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.05 }}
-      whileHover={{ scale: 1.05, y: -4 }}
+      whileHover={{ scale: 1.04, y: -3 }}
       onClick={handleClick}
       className="cursor-pointer group"
     >
-      <div className={`relative bg-gradient-to-br ${gradient} rounded-3xl p-6 flex flex-col items-center gap-3 shadow-lg shadow-slate-900/10 hover:shadow-2xl transition-shadow`}>
-        {/* Glow effect on hover */}
-        <div className="absolute inset-0 rounded-2xl bg-white/0 group-hover:bg-white/10 transition-colors duration-300" />
-
-        <span className="text-4xl">{category.icon || '🏢'}</span>
-        <span className="text-sm font-bold text-white font-outfit text-center leading-tight">
+      <div className={`${palette.bg} border ${palette.border} rounded-2xl p-5 flex flex-col items-center gap-3 transition-all duration-200 hover:shadow-md`}>
+        <div className={`text-4xl ${palette.icon} transition-transform duration-200 group-hover:scale-110`}>
+          {category.icon || '🏢'}
+        </div>
+        <span className={`text-xs font-bold ${palette.text} text-center leading-tight`} style={{ fontFamily: "'Inter', sans-serif" }}>
           {category.name}
         </span>
       </div>

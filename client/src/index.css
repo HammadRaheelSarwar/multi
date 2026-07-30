@@ -9,6 +9,23 @@
 /* ──────────────── CSS Variables ──────────────── */
 @layer base {
   :root {
+    /* UstadHub Design System */
+    --uh-primary:     #000000;
+    --uh-secondary:   #006a63;
+    --uh-secondary-light: #99efe5;
+    --uh-champagne:   #e9c178;
+    --uh-champagne-light: #ffdea5;
+    --uh-background:  #f9f9ff;
+    --uh-surface:     #ffffff;
+    --uh-surface-container: #e7eeff;
+    --uh-surface-low: #f0f3ff;
+    --uh-on-surface:  #131c2a;
+    --uh-on-surface-variant: #45464d;
+    --uh-outline:     #76767e;
+    --uh-outline-variant: #c6c6ce;
+    --uh-navy:        #131a33;
+
+    /* Legacy vars (keep for dark mode compat) */
     --primary-50:  #eff6ff;
     --primary-100: #dbeafe;
     --primary-500: #3b82f6;
@@ -45,8 +62,8 @@
 
   body {
     font-family: 'Inter', system-ui, sans-serif;
-    background: #f9f9ff;
-    color: var(--ink);
+    background: var(--uh-background);
+    color: var(--uh-on-surface);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -61,6 +78,74 @@
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     letter-spacing: -0.025em;
   }
+}
+
+/* ──────────────── UstadHub Design System Components ──────────────── */
+
+/* Glass Nav */
+.uh-nav {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(198, 198, 206, 0.35);
+  box-shadow: 0 2px 20px rgba(19, 28, 42, 0.06);
+}
+
+/* Primary card - white with soft shadow */
+.uh-card {
+  background: #ffffff;
+  border: 1px solid rgba(198, 198, 206, 0.4);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.uh-card:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+  transform: translateY(-2px);
+}
+
+/* Secondary (teal) button */
+.uh-btn-primary {
+  background: #006a63;
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+.uh-btn-primary:hover { background: #00504a; }
+
+/* Outline button */
+.uh-btn-outline {
+  background: transparent;
+  color: #131c2a;
+  border: 1.5px solid #76767e;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+.uh-btn-outline:hover { background: rgba(218, 227, 246, 0.4); }
+
+/* Tag / chip */
+.uh-chip {
+  background: rgba(0, 106, 99, 0.1);
+  color: #006a63;
+  border: 1px solid rgba(0, 106, 99, 0.2);
+  border-radius: 9999px;
+  padding: 2px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Surface chip (neutral) */
+.uh-chip-neutral {
+  background: #dae3f6;
+  color: #45464d;
+  border: 1px solid rgba(198, 198, 206, 0.5);
+  border-radius: 9999px;
+  padding: 2px 12px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 /* ──────────────── Glassmorphism ──────────────── */
@@ -95,10 +180,10 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(rgba(53,109,243,.12) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(0,106,99,.08) 1px, transparent 1px);
   background-size: 24px 24px;
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,.25), transparent 58%);
-  opacity: .35;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.2), transparent 60%);
+  opacity: .4;
 }
 
 .premium-button {
@@ -142,9 +227,15 @@
   50%       { opacity: 0.6; }
 }
 
-.animate-fadeInUp  { animation: fadeInUp 0.6s ease-out forwards; }
-.animate-fadeIn    { animation: fadeIn 0.4s ease-out forwards; }
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+.animate-fadeInUp   { animation: fadeInUp 0.6s ease-out forwards; }
+.animate-fadeIn     { animation: fadeIn 0.4s ease-out forwards; }
 .animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+.animate-float      { animation: float 3s ease-in-out infinite; }
 
 /* ──────────────── Custom Scrollbar ──────────────── */
 ::-webkit-scrollbar {
@@ -157,12 +248,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.25);
+  background: rgba(0, 106, 99, 0.25);
   border-radius: 99px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(59, 130, 246, 0.5);
+  background: rgba(0, 106, 99, 0.5);
 }
 
 /* ──────────────── Utility overrides ──────────────── */
@@ -176,27 +267,27 @@
 
 /* Focus ring standardization */
 *:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid #006a63;
   outline-offset: 2px;
 }
 
 /* Premium global surface system */
 .premium-card {
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  box-shadow: 0 12px 35px rgba(30, 64, 175, 0.06);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(198, 198, 206, 0.45);
+  box-shadow: 0 4px 20px rgba(19, 28, 42, 0.05);
   backdrop-filter: blur(14px);
 }
 .premium-card:hover {
-  border-color: rgba(147, 197, 253, 0.8);
-  box-shadow: 0 22px 45px rgba(30, 64, 175, 0.13);
+  border-color: rgba(0, 106, 99, 0.3);
+  box-shadow: 0 12px 35px rgba(19, 28, 42, 0.10);
 }
 .dark .premium-card {
   background: rgba(17, 24, 39, 0.82);
   border-color: rgba(71, 85, 105, 0.55);
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
 }
-.dark .premium-card:hover { border-color: rgba(96, 165, 250, 0.5); }
+.dark .premium-card:hover { border-color: rgba(0, 106, 99, 0.5); }
 
 .premium-section {
   position: relative;
@@ -204,4 +295,72 @@
 }
 .dark .premium-section {
   background: linear-gradient(180deg, #0a0f1e 0%, #111827 100%);
+}
+
+/* ──────────────── UstadHub Expert Card ──────────────── */
+.uh-expert-card {
+  background: #ffffff;
+  border: 1px solid rgba(198, 198, 206, 0.4);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  cursor: pointer;
+}
+
+.uh-expert-card:hover {
+  box-shadow: 0 16px 40px rgba(19, 28, 42, 0.12);
+  transform: translateY(-3px);
+}
+
+/* ──────────────── UstadHub Dashboard Sidebar ──────────────── */
+.uh-sidebar {
+  background: #ffffff;
+  border-right: 1px solid rgba(198, 198, 206, 0.4);
+  box-shadow: 4px 0 24px rgba(19, 28, 42, 0.05);
+}
+
+.uh-sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #45464d;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.uh-sidebar-link:hover {
+  background: #f0f3ff;
+  color: #131c2a;
+}
+
+.uh-sidebar-link.active {
+  background: #e7eeff;
+  color: #006a63;
+  font-weight: 600;
+}
+
+/* ──────────────── Range Slider ──────────────── */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: #dae3f6;
+  border-radius: 99px;
+  outline: none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #006a63;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0,106,99,0.3);
 }
