@@ -41,10 +41,10 @@ const BusinessCard = ({ business }) => {
   return (
     <div
       onClick={handleClick}
-      className="group bg-white dark:bg-dark-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-dark-700 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-1"
+      className="group premium-card bg-white dark:bg-dark-800 rounded-3xl overflow-hidden border border-gray-100 dark:border-dark-700 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-1"
     >
       {/* Cover Image */}
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-52 overflow-hidden">
         <img
           src={coverImage}
           alt={name}
@@ -72,7 +72,7 @@ const BusinessCard = ({ business }) => {
       </div>
 
       {/* Card Body */}
-      <div className="p-4">
+      <div className="p-5">
         {/* Name + Verification */}
         <div className="flex items-start justify-between gap-2 mb-1">
           <h3 className="font-semibold text-gray-900 dark:text-gray-100 font-outfit truncate text-base leading-tight">

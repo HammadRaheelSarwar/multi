@@ -66,9 +66,9 @@ const Home = () => {
   return (
     <div className="overflow-x-hidden">
       {/* ─────────────── HERO SECTION ─────────────── */}
-      <section className="relative min-h-[760px] pt-24 pb-16 flex flex-col items-center justify-center text-center px-4 overflow-hidden z-0">
+      <section className="relative min-h-[790px] pt-28 pb-20 flex flex-col items-center justify-center text-center px-4 overflow-hidden z-0 home-section">
         {/* Gradient background */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(99,102,241,0.18),transparent_36%),linear-gradient(135deg,#eff6ff_0%,#f8faff_45%,#ffffff_100%)] dark:bg-[radial-gradient(circle_at_50%_20%,rgba(79,70,229,0.3),transparent_38%),linear-gradient(135deg,#0a0f1e_0%,#111b3d_55%,#17113d_100%)] -z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_8%,rgba(53,109,243,0.20),transparent_34%),linear-gradient(145deg,#eef4ff_0%,#f8faff_48%,#ffffff_100%)] dark:bg-[radial-gradient(circle_at_50%_8%,rgba(79,70,229,0.3),transparent_38%),linear-gradient(135deg,#0a0f1e_0%,#111b3d_55%,#17113d_100%)] -z-10" />
         {/* Decorative blobs */}
         <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-3xl -z-10" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-600/15 rounded-full blur-3xl -z-10" />
@@ -120,7 +120,7 @@ const Home = () => {
 
           {/* Headline */}
           <motion.h1 variants={fadeUp} custom={1}
-            className="text-5xl md:text-8xl font-extrabold text-gray-900 dark:text-white font-outfit leading-[0.98] tracking-tight drop-shadow-sm"
+            className="text-5xl md:text-[6.5rem] font-extrabold text-gray-900 dark:text-white font-outfit leading-[0.94] tracking-[-0.06em] drop-shadow-sm"
           >
             Find Trusted<br />
             <span className="bg-gradient-to-r from-blue-600 via-indigo-500 to-violet-600 dark:from-blue-400 dark:via-indigo-400 dark:to-violet-400 bg-clip-text text-transparent">
@@ -142,7 +142,7 @@ const Home = () => {
           </motion.div>
 
           <motion.div variants={fadeUp} custom={4} className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <button onClick={() => navigate('/search')} className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-xl shadow-blue-600/25 transition hover:-translate-y-0.5 hover:bg-blue-700">
+            <button onClick={() => navigate('/search')} className="premium-button inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5">
               Explore services <ArrowRight size={16} />
             </button>
             <button onClick={() => navigate('/register')} className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/80 px-6 py-3 text-sm font-bold text-gray-700 shadow-lg backdrop-blur transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 dark:border-white/15 dark:bg-white/10 dark:text-gray-200">
@@ -172,7 +172,7 @@ const Home = () => {
       </section>
 
       {/* ─────────────── CATEGORIES ─────────────── */}
-      <section className="py-20 px-4 bg-white dark:bg-dark-900">
+      <section className="py-24 px-4 bg-white dark:bg-dark-900 home-section">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -213,7 +213,7 @@ const Home = () => {
       </section>
 
       {/* ─────────────── FEATURED BUSINESSES ─────────────── */}
-      <section className="py-20 px-4 bg-gray-50 dark:bg-dark-800">
+      <section className="py-24 px-4 bg-[#f4f6fa] dark:bg-dark-800 home-section">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -42,8 +42,8 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white dark:bg-dark-900 shadow-md py-3'
-          : 'bg-transparent py-5'
+        ? 'bg-white/90 dark:bg-dark-900/90 shadow-[0_8px_30px_rgba(16,24,40,0.08)] backdrop-blur-xl py-3'
+          : 'bg-white/60 dark:bg-dark-900/50 backdrop-blur-md py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,7 +59,7 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.path}
-                className={`text-sm font-medium transition-colors ${
+                className={`text-[13px] font-semibold tracking-wide transition-colors ${
                   location.pathname === link.path
                     ? 'text-blue-500'
                     : 'text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400'
@@ -105,7 +105,7 @@ const Navbar = () => {
                 {['super_admin', 'admin', 'moderator'].includes(user?.role) && (
                   <Link
                     to="/admin"
-                    className="flex items-center gap-1 text-sm font-medium text-blue-500 hover:text-blue-600"
+                    className="flex items-center gap-2 rounded-full bg-blue-50 px-3 py-2 text-xs font-bold text-blue-600 hover:bg-blue-100 dark:bg-blue-950/30 dark:text-blue-300"
                   >
                     <LayoutDashboard size={16} />
                     <span>Admin</span>
@@ -137,7 +137,7 @@ const Navbar = () => {
                 {/* Logout */}
                 <button
                   onClick={handleLogout}
-                  className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-full transition-colors"
+                  className="p-2 text-gray-400 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-950/20 rounded-full transition-colors"
                   title="Logout"
                 >
                   <LogOut size={18} />
