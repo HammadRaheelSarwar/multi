@@ -54,7 +54,7 @@ const BusinessLayout = () => {
       <aside className="hidden md:flex md:flex-col md:w-64 bg-white dark:bg-dark-800 border-r border-gray-200 dark:border-dark-700 transition-colors duration-300">
         <div className="flex items-center gap-2 px-6 py-5 border-b border-gray-200 dark:border-dark-700">
           <span className="text-xl font-bold font-outfit tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-            ServeLocal
+            Ustad Hub
           </span>
           <span className="text-xxs px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-semibold uppercase">
             Partner
@@ -174,7 +174,7 @@ const BusinessLayout = () => {
           <div className="relative flex flex-col w-64 bg-white dark:bg-dark-800 border-r border-gray-200 dark:border-dark-700 h-full p-4 animate-in slide-in-from-left duration-200">
             <div className="flex items-center justify-between pb-4 mb-4 border-b border-gray-200 dark:border-dark-700">
               <span className="text-lg font-bold font-outfit tracking-tight text-blue-600 dark:text-blue-400">
-                ServeLocal Partner
+                Ustad Hub Partner
               </span>
               <button onClick={() => setMobileMenuOpen(false)} className="p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-lg">
                 <X size={18} />

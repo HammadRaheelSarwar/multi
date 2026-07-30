@@ -31,7 +31,7 @@ const Sidebar = () => {
       {/* Logo */}
       <div className="px-6 py-5 border-b border-slate-800">
         <span className="text-xl font-bold font-outfit bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-          ServeLocal Admin
+          Ustad Hub Admin
         </span>
       </div>
 

@@ -15,7 +15,7 @@ const sendEmail = async ({ to, subject, html }) => {
   try {
     const transporter = createTransporter();
     const mailOptions = {
-      from: `"${process.env.EMAIL_FROM_NAME || 'Local Services Marketplace'}" <${process.env.EMAIL_FROM || 'noreply@marketplace.com'}>`,
+      from: `"${process.env.EMAIL_FROM_NAME || 'Ustad Hub'}" <${process.env.EMAIL_FROM || 'noreply@marketplace.com'}>`,
       to,
       subject,
       html,
@@ -33,13 +33,13 @@ const sendEmail = async ({ to, subject, html }) => {
 const sendWelcomeEmail = async (user) => {
   const html = `
     <div style="font-family: sans-serif; padding: 20px; color: #333;">
-      <h2>Welcome to ServeLocal, ${user.fullName}!</h2>
+      <h2>Welcome to Ustad Hub, ${user.fullName}!</h2>
       <p>We are excited to have you join our marketplace platform.</p>
       <p>If you're a business owner, you can list your business and start receiving bookings. If you're a customer, feel free to browse categories and find local experts.</p>
-      <p>Best regards,<br/>The ServeLocal Team</p>
+      <p>Best regards,<br/>The Ustad Hub Team</p>
     </div>
   `;
-  return sendEmail({ to: user.email, subject: 'Welcome to ServeLocal!', html });
+  return sendEmail({ to: user.email, subject: 'Welcome to Ustad Hub!', html });
 };
 
 const sendVerificationEmail = async (user, token) => {
@@ -53,7 +53,7 @@ const sendVerificationEmail = async (user, token) => {
       <p>This link expires in 24 hours.</p>
     </div>
   `;
-  return sendEmail({ to: user.email, subject: 'Email Verification - ServeLocal', html });
+  return sendEmail({ to: user.email, subject: 'Email Verification - Ustad Hub', html });
 };
 
 const sendPasswordResetEmail = async (user, token) => {
@@ -67,7 +67,7 @@ const sendPasswordResetEmail = async (user, token) => {
       <p>If you did not request this, please ignore this email. This link expires in 10 minutes.</p>
     </div>
   `;
-  return sendEmail({ to: user.email, subject: 'Password Reset Request - ServeLocal', html });
+  return sendEmail({ to: user.email, subject: 'Password Reset Request - Ustad Hub', html });
 };
 
 const sendBookingConfirmationEmail = async (user, booking, businessName, serviceName) => {
@@ -82,10 +82,10 @@ const sendBookingConfirmationEmail = async (user, booking, businessName, service
         <strong>Time Slot:</strong> ${booking.timeSlot}<br/>
         <strong>Price:</strong> $${booking.price}
       </div>
-      <p>Thank you for using ServeLocal!</p>
+      <p>Thank you for using Ustad Hub!</p>
     </div>
   `;
-  return sendEmail({ to: user.email, subject: 'Booking Confirmation - ServeLocal', html });
+  return sendEmail({ to: user.email, subject: 'Booking Confirmation - Ustad Hub', html });
 };
 
 module.exports = {

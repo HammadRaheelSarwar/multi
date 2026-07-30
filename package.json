@@ -1,7 +1,7 @@
 {
-  "name": "mern-local-services-marketplace",
+  "name": "ustad-hub",
   "version": "1.0.0",
-  "description": "Local Services Marketplace - MERN Stack",
+  "description": "Ustad Hub - trusted local services marketplace",
   "private": true,
   "scripts": {
     "install-all": "npm install && npm install --prefix client && npm install --prefix server",

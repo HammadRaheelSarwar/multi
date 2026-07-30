@@ -31,7 +31,7 @@ const ForgotPassword = () => {
         <div className="text-center mb-8">
           <Link to="/">
             <span className="text-3xl font-extrabold font-outfit bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-              ServeLocal
+              Ustad Hub
             </span>
           </Link>
           <h2 className="mt-4 text-2xl font-bold text-gray-900 dark:text-white font-outfit">Forgot Password?</h2>

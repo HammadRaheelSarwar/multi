@@ -1,6 +1,6 @@
-# Local Services Marketplace — MERN Stack
+# Ustad Hub — MERN Stack
 
-A full-featured local services marketplace platform built with the MERN stack.
+A full-featured local services marketplace platform built with the MERN stack under the Ustad Hub brand.
 
 ## 🛠 Tech Stack
 

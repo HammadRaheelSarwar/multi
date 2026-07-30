@@ -50,9 +50,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-10">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold font-outfit tracking-tight bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
-              ServeLocal
-            </span>
+            <img src="/logo.png" alt="Ustad Hub" className="h-12 w-auto object-contain" />
           </Link>
 
           {/* Desktop Nav Links */}

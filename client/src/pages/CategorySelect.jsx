@@ -47,7 +47,7 @@ const CategorySelect = () => {
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
           <span className="text-3xl font-extrabold font-outfit bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent block mb-4">
-            ServeLocal
+            Ustad Hub
           </span>
           <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white font-outfit">
             What services do you need?
@@ -107,7 +107,7 @@ const CategorySelect = () => {
             disabled={loading}
             className="inline-flex items-center gap-2 px-8 py-4 text-white font-bold text-lg bg-blue-600 hover:bg-blue-700 rounded-2xl transition-all shadow-xl shadow-blue-600/30 disabled:opacity-60"
           >
-            {loading ? 'Saving...' : 'Continue to ServeLocal'}
+            {loading ? 'Saving...' : 'Continue to Ustad Hub'}
             <ArrowRight size={20} />
           </button>
           <div className="mt-4">

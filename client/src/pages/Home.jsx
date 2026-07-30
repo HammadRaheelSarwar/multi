@@ -82,7 +82,7 @@ const Home = () => {
           {/* Tag */}
           <motion.div variants={fadeUp} custom={0}>
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400">
-              <Sparkles size={14} /> UstadHub - Book Smart. Live Easy.
+              <Sparkles size={14} /> Ustad Hub - Book Smart. Live Easy.
             </span>
           </motion.div>
 
@@ -364,7 +364,7 @@ const Home = () => {
               Ready to Grow Your Business?
             </h2>
             <p className="text-blue-100 text-lg mb-8 max-w-xl mx-auto">
-              Join thousands of local businesses already getting more customers through ServeLocal. Setup takes less than 5 minutes.
+              Join thousands of local businesses already getting more customers through Ustad Hub. Setup takes less than 5 minutes.
             </p>
             <button
               onClick={() => navigate('/register')}

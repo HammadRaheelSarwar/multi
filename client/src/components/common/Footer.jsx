@@ -9,9 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="flex flex-col gap-4">
-            <span className="text-xl font-bold font-outfit tracking-tight bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
-              ServeLocal
-            </span>
+            <img src="/logo.png" alt="Ustad Hub" className="h-14 w-auto object-contain object-left" />
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Connecting customers with trusted local professionals and service providers in Pakistan.
             </p>
@@ -73,7 +71,7 @@ const Footer = () => {
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            &copy; {new Date().getFullYear()} ServeLocal. All rights reserved.
+            &copy; {new Date().getFullYear()} Ustad Hub. All rights reserved.
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
             Made by <Heart size={12} className="text-red-500 fill-red-500 mx-0.5" />{' '}
